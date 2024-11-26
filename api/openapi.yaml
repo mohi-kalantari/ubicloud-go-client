@@ -1,0 +1,4725 @@
+openapi: 3.0.3
+info:
+  contact:
+    email: support@ubicloud.com
+    url: https://www.ubicloud.com/
+  description: API for managing resources on Ubicloud
+  license:
+    name: GNU Affero General Public License v3.0 (AGPL-3.0)
+    url: https://www.gnu.org/licenses/agpl-3.0.en.html
+  title: Clover API
+  version: 0.1.0
+servers:
+- url: https://api.ubicloud.com
+security:
+- BearerAuth: []
+tags:
+- description: Firewall Operations
+  name: Firewall
+- description: Firewall Rule Operations
+  name: Firewall Rule
+- description: Load Balancer Operations
+  name: Load Balancer
+- description: Login Operations
+  name: Login
+- description: Postgres Operations
+  name: Postgres
+- description: Postgres Firewall Rule Operations
+  name: Postgres Firewall Rule
+- description: Postgres Metric Destination
+  name: Postgres Metric Destination
+- description: Private Subnet Operations
+  name: Private Subnet
+- description: Project Operations
+  name: Project
+- description: Virtual Machine Operations
+  name: Virtual Machine
+paths:
+  /login:
+    post:
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/login_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/login_200_response'
+          description: Logged in successfully.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      security: []
+      summary: Login with user information
+      tags:
+      - Login
+  /project:
+    get:
+      operationId: listProjects
+      parameters:
+      - description: Pagination - Start after
+        explode: true
+        in: query
+        name: start_after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Pagination - Page size
+        explode: true
+        in: query
+        name: page_size
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      - description: Pagination - Order column
+        explode: true
+        in: query
+        name: order_column
+        required: false
+        schema:
+          default: id
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listProjects_200_response'
+          description: Return the list of all projects visible to the logged in user
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      security:
+      - BearerAuth: []
+      summary: List all projects visible to the logged in user.
+      tags:
+      - Project
+    post:
+      operationId: createProject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createProject_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+          description: Project is created successfully.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      security:
+      - BearerAuth: []
+      summary: Create a new project
+      tags:
+      - Project
+  /project/{project_id}:
+    delete:
+      operationId: deleteProject
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Project deleted successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Delete a project
+      tags:
+      - Project
+    get:
+      operationId: getProject
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+          description: Retrieved project
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Retrieve a project
+      tags:
+      - Project
+  /project/{project_id}/firewall:
+    get:
+      operationId: getFirewall
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getFirewall_200_response'
+          description: Firewall list retrieved successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Return the list of firewalls in the project
+      tags:
+      - Firewall
+    post:
+      operationId: createFirewall
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createFirewall_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Firewall'
+          description: Firewall created successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Create a new firewall
+      tags:
+      - Firewall
+  /project/{project_id}/firewall/{firewall_name}:
+    delete:
+      operationId: deleteFirewall
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Name of the firewall
+        explode: false
+        in: path
+        name: firewall_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Firewall deleted successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Delete a specific firewall
+      tags:
+      - Firewall
+    get:
+      operationId: getFirewallDetails
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Name of the firewall
+        explode: false
+        in: path
+        name: firewall_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Firewall'
+          description: Details of the firewall
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Get details of a specific firewall
+      tags:
+      - Firewall
+  /project/{project_id}/firewall/{firewall_name}/firewall-rule:
+    post:
+      operationId: createFirewallRule
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Name of the firewall
+        explode: false
+        in: path
+        name: firewall_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createFirewallRule_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FirewallRule'
+          description: Firewall rule created successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Create a new firewall rule
+      tags:
+      - Firewall Rule
+  /project/{project_id}/firewall/{firewall_name}/firewall-rule/{firewall_rule_id}:
+    delete:
+      operationId: deleteFirewallRule
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Name of the firewall
+        explode: false
+        in: path
+        name: firewall_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ID of the firewall rule
+        explode: false
+        in: path
+        name: firewall_rule_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Firewall rule deleted successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Delete a specific firewall rule
+      tags:
+      - Firewall Rule
+    get:
+      operationId: getFirewallRuleDetails
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Name of the firewall
+        explode: false
+        in: path
+        name: firewall_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ID of the firewall rule
+        explode: false
+        in: path
+        name: firewall_rule_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FirewallRule'
+          description: Details of the firewall rule
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Get details of a firewall rule
+      tags:
+      - Firewall Rule
+  /project/{project_id}/load-balancer:
+    get:
+      operationId: listLoadBalancers
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Pagination - Start after
+        explode: true
+        in: query
+        name: start_after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Pagination - Page size
+        explode: true
+        in: query
+        name: page_size
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      - description: Pagination - Order column
+        explode: true
+        in: query
+        name: order_column
+        required: false
+        schema:
+          default: id
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listLoadBalancers_200_response'
+          description: A list of Load Balancers in a specific project
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: List Load Balancers in a specific project
+      tags:
+      - Load Balancer
+  /project/{project_id}/load-balancer/{load_balancer_name}:
+    get:
+      operationId: getLoadBalancer
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Name of the load balancer
+        explode: false
+        in: path
+        name: load_balancer_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoadBalancerDetailed'
+          description: A list of Load Balancers in a specific project
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Get details of a specific Load Balancer
+      tags:
+      - Load Balancer
+    post:
+      operationId: createLoadBalancer
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Name of the load balancer
+        explode: false
+        in: path
+        name: load_balancer_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createLoadBalancer_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoadBalancerDetailed'
+          description: Load Balancer created successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Create a new Load Balancer in a project
+      tags:
+      - Load Balancer
+  /project/{project_id}/location/{location}/firewall:
+    get:
+      operationId: getLocationFirewall
+      parameters:
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getFirewall_200_response'
+          description: Firewall list retrieved successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Return the list of firewalls in the project and location
+      tags:
+      - Firewall
+  /project/{project_id}/location/{location}/firewall/_{firewall_id}/attach-subnet:
+    post:
+      operationId: actionLocationFirewallAttachSubnet
+      parameters:
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ID of the firewall
+        explode: false
+        in: path
+        name: firewall_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/actionLocationFirewallAttachSubnet_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FirewallDetailed'
+          description: Subnet attached successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Attach a subnet to firewall
+      tags:
+      - Firewall
+  /project/{project_id}/location/{location}/firewall/_{firewall_id}/detach-subnet:
+    post:
+      operationId: actionLocationFirewallDetachSubnet
+      parameters:
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ID of the firewall
+        explode: false
+        in: path
+        name: firewall_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/actionLocationFirewallDetachSubnet_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FirewallDetailed'
+          description: Subnet detached successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Detach a subnet from firewall
+      tags:
+      - Firewall
+  /project/{project_id}/location/{location}/firewall/id/{firewall_id}:
+    delete:
+      operationId: deleteLocationFirewallWithId
+      parameters:
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ID of the firewall
+        explode: false
+        in: path
+        name: firewall_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Firewall deleted successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Delete a specific firewall
+      tags:
+      - Firewall
+    get:
+      operationId: getLocationFirewallDetailsWithId
+      parameters:
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ID of the firewall
+        explode: false
+        in: path
+        name: firewall_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Firewall'
+          description: Details of the firewall
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Get details of a specific firewall
+      tags:
+      - Firewall
+  /project/{project_id}/location/{location}/firewall/id/{firewall_name}/firewall-rule:
+    post:
+      operationId: createLocationFirewallRuleWithId
+      parameters:
+      - description: Name of the firewall
+        explode: false
+        in: path
+        name: firewall_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createFirewallRule_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FirewallRule'
+          description: Firewall rule created successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Create a new firewall rule
+      tags:
+      - Firewall Rule
+  /project/{project_id}/location/{location}/firewall/id/{firewall_name}/firewall-rule/{firewall_rule_id}:
+    delete:
+      operationId: deleteLocationFirewallFirewallRuleWithId
+      parameters:
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Name of the firewall
+        explode: false
+        in: path
+        name: firewall_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ID of the firewall rule
+        explode: false
+        in: path
+        name: firewall_rule_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Firewall rule deleted successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Delete a specific firewall rule
+      tags:
+      - Firewall Rule
+    get:
+      operationId: getLocationFirewallFirewallRuleDetailsWithId
+      parameters:
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Name of the firewall
+        explode: false
+        in: path
+        name: firewall_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ID of the firewall rule
+        explode: false
+        in: path
+        name: firewall_rule_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FirewallRule'
+          description: Details of the firewall rule
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Get details of a firewall rule
+      tags:
+      - Firewall Rule
+    post:
+      operationId: createLocationFirewallFirewallRuleWithId
+      parameters:
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Name of the firewall
+        explode: false
+        in: path
+        name: firewall_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ID of the firewall rule
+        explode: false
+        in: path
+        name: firewall_rule_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createFirewallRule_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FirewallRule'
+          description: Firewall rule created successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Create a new firewall rule
+      tags:
+      - Firewall Rule
+  /project/{project_id}/location/{location}/firewall/{firewall_name}:
+    delete:
+      operationId: deleteLocationFirewall
+      parameters:
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Name of the firewall
+        explode: false
+        in: path
+        name: firewall_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Firewall deleted successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Delete a specific firewall
+      tags:
+      - Firewall
+    get:
+      operationId: getLocationFirewallDetails
+      parameters:
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Name of the firewall
+        explode: false
+        in: path
+        name: firewall_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FirewallDetailed'
+          description: Details of the firewall
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Get details of a specific firewall
+      tags:
+      - Firewall
+    post:
+      operationId: createLocationFirewall
+      parameters:
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Name of the firewall
+        explode: false
+        in: path
+        name: firewall_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createLocationFirewall_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Firewall'
+          description: Firewall created successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Create a new firewall
+      tags:
+      - Firewall
+  /project/{project_id}/location/{location}/firewall/{firewall_name}/firewall-rule:
+    post:
+      operationId: createLocationFirewallRule
+      parameters:
+      - description: Name of the firewall
+        explode: false
+        in: path
+        name: firewall_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createFirewallRule_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FirewallRule'
+          description: Firewall rule created successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Create a new firewall rule
+      tags:
+      - Firewall Rule
+  /project/{project_id}/location/{location}/firewall/{firewall_name}/firewall-rule/{firewall_rule_id}:
+    delete:
+      operationId: deleteLocationFirewallFirewallRule
+      parameters:
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Name of the firewall
+        explode: false
+        in: path
+        name: firewall_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ID of the firewall rule
+        explode: false
+        in: path
+        name: firewall_rule_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Firewall rule deleted successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Delete a specific firewall rule
+      tags:
+      - Firewall Rule
+    get:
+      operationId: getLocationFirewallFirewallRuleDetails
+      parameters:
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Name of the firewall
+        explode: false
+        in: path
+        name: firewall_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ID of the firewall rule
+        explode: false
+        in: path
+        name: firewall_rule_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FirewallRule'
+          description: Details of the firewall rule
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Get details of a firewall rule
+      tags:
+      - Firewall Rule
+    post:
+      operationId: createLocationFirewallFirewallRule
+      parameters:
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Name of the firewall
+        explode: false
+        in: path
+        name: firewall_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ID of the firewall rule
+        explode: false
+        in: path
+        name: firewall_rule_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createFirewallRule_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FirewallRule'
+          description: Firewall rule created successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Create a new firewall rule
+      tags:
+      - Firewall Rule
+  /project/{project_id}/location/{location}/load-balancer:
+    get:
+      operationId: listLocationLoadBalancers
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Pagination - Start after
+        explode: true
+        in: query
+        name: start_after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Pagination - Page size
+        explode: true
+        in: query
+        name: page_size
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      - description: Pagination - Order column
+        explode: true
+        in: query
+        name: order_column
+        required: false
+        schema:
+          default: id
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listLoadBalancers_200_response'
+          description: A list of Load Balancers in a specific location of a project
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: List Load Balancers in a specific location of a project
+      tags:
+      - Load Balancer
+  /project/{project_id}/location/{location}/load-balancer/id/{load_balancer_id}:
+    delete:
+      operationId: deleteLoadBalancerWithID
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: ID of the load balancer
+        explode: false
+        in: path
+        name: load_balancer_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Load balancer is deleted successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Delete a specific Load Balancer with ID
+      tags:
+      - Load Balancer
+    get:
+      operationId: getLoadBalancerDetailsWithId
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: ID of the load balancer
+        explode: false
+        in: path
+        name: load_balancer_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoadBalancerDetailed'
+          description: Details of the Load Balancer in a location
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Get details of a specific Load Balancer in a location with ID
+      tags:
+      - Load Balancer
+  /project/{project_id}/location/{location}/load-balancer/{load_balancer_name}:
+    delete:
+      operationId: deleteLoadBalancer
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Name of the load balancer
+        explode: false
+        in: path
+        name: load_balancer_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Load Balancer deleted successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Delete a specific Load Balancer
+      tags:
+      - Load Balancer
+    get:
+      operationId: getLoadBalancerDetails
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Name of the load balancer
+        explode: false
+        in: path
+        name: load_balancer_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoadBalancerDetailed'
+          description: Details of the LoadBalancer
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Get details of a specific Load Balancer in a location
+      tags:
+      - Load Balancer
+    patch:
+      operationId: patchLocationLoadBalancer
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Name of the load balancer
+        explode: false
+        in: path
+        name: load_balancer_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/patchLocationLoadBalancer_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoadBalancerDetailed'
+          description: Load Balancer updated successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Update a Load Balancer in a specific location of a project
+      tags:
+      - Load Balancer
+    post:
+      operationId: createLocationLoadBalancer
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Name of the load balancer
+        explode: false
+        in: path
+        name: load_balancer_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createLoadBalancer_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoadBalancerDetailed'
+          description: Load Balancer created successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Create a new Load Balancer in a specific location of a project
+      tags:
+      - Load Balancer
+  /project/{project_id}/location/{location}/load-balancer/{load_balancer_name}/attach-vm:
+    post:
+      operationId: attachVmLocationLoadBalancer
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Name of the load balancer
+        explode: false
+        in: path
+        name: load_balancer_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/attachVmLocationLoadBalancer_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoadBalancerDetailed'
+          description: VM attached to Load Balancer successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Attach a VM to a Load Balancer in a specific location of a project
+      tags:
+      - Load Balancer
+  /project/{project_id}/location/{location}/load-balancer/{load_balancer_name}/detach-vm:
+    post:
+      operationId: detachVmLocationLoadBalancer
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Name of the load balancer
+        explode: false
+        in: path
+        name: load_balancer_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/detachVmLocationLoadBalancer_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoadBalancerDetailed'
+          description: VM detached from Load Balancer successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Detach a VM from a Load Balancer in a specific location of a project
+      tags:
+      - Load Balancer
+  /project/{project_id}/location/{location}/postgres:
+    get:
+      operationId: listLocationPostgresDatabases
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Pagination - Start after
+        explode: true
+        in: query
+        name: start_after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Pagination - Page size
+        explode: true
+        in: query
+        name: page_size
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      - description: Pagination - Order column
+        explode: true
+        in: query
+        name: order_column
+        required: false
+        schema:
+          default: id
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listLocationPostgresDatabases_200_response'
+          description: A list of Postgres databases in a specific location of a project
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: List Postgres databases in a specific location of a project
+      tags:
+      - Postgres
+  /project/{project_id}/location/{location}/postgres/_{postgres_database_id}/failover:
+    post:
+      operationId: failoverPostgresDatabaseWithID
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Postgres database ID
+        explode: false
+        in: path
+        name: postgres_database_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostgresDetailed'
+          description: Details of the failed over Postgres databases in a location
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Failover a specific Postgres database with ID
+      tags:
+      - Postgres
+  /project/{project_id}/location/{location}/postgres/_{postgres_database_id}/firewall-rule:
+    get:
+      operationId: listLocationPostgresFirewallRules
+      parameters:
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Postgres database ID
+        explode: false
+        in: path
+        name: postgres_database_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listLocationPostgresFirewallRules_200_response'
+          description: List of the location Postgres firewall rules
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: List location Postgres firewall rules
+      tags:
+      - Postgres Firewall Rule
+    post:
+      operationId: createLocationPostgresFirewallRuleWithId
+      parameters:
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Postgres database ID
+        explode: false
+        in: path
+        name: postgres_database_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createLocationPostgresFirewallRuleWithId_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostgresFirewallRule'
+          description: Postgres firewall rule created successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Create a new Postgres firewall rule
+      tags:
+      - Postgres Firewall Rule
+  /project/{project_id}/location/{location}/postgres/id/{postgres_database_id}:
+    delete:
+      operationId: deletePostgresDatabaseWithID
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Postgres database ID
+        explode: false
+        in: path
+        name: postgres_database_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Postgres database is deleted successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Delete a specific Postgres database with ID
+      tags:
+      - Postgres
+    get:
+      operationId: getPostgresDetailsWithId
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Postgres database ID
+        explode: false
+        in: path
+        name: postgres_database_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostgresDetailed'
+          description: Details of the Postgres databases in a location
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Get details of a specific Postgres database in a location with ID
+      tags:
+      - Postgres
+  /project/{project_id}/location/{location}/postgres/id/{postgres_database_id}/firewall-rule/{firewall_rule_id}:
+    delete:
+      operationId: deleteLocationPostgresFirewallRuleWithId
+      parameters:
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Postgres database ID
+        explode: false
+        in: path
+        name: postgres_database_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ID of the firewall rule
+        explode: false
+        in: path
+        name: firewall_rule_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Postgres firewall rule deleted successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Delete a specific Postgres firewall rule
+      tags:
+      - Firewall Rule
+    get:
+      operationId: getLocationPostgresFirewallRuleDetailsWithId
+      parameters:
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Postgres database ID
+        explode: false
+        in: path
+        name: postgres_database_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ID of the firewall rule
+        explode: false
+        in: path
+        name: firewall_rule_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostgresFirewallRule'
+          description: Details of the Postgres firewall rule
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Get details of a Postgres firewall rule
+      tags:
+      - Postgres Firewall Rule
+    post:
+      operationId: createLocationPostgresFirewallRuleWithIdWithId
+      parameters:
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Postgres database ID
+        explode: false
+        in: path
+        name: postgres_database_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ID of the firewall rule
+        explode: false
+        in: path
+        name: firewall_rule_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createLocationPostgresFirewallRuleWithIdWithId_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostgresFirewallRule'
+          description: Postgres firewall rule created successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Create a new Postgres firewall rule
+      tags:
+      - Postgres Firewall Rule
+  /project/{project_id}/location/{location}/postgres/id/{postgres_database_id}/reset-superuser-password:
+    post:
+      operationId: resetSuperuserPasswordWithID
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Postgres database ID
+        explode: false
+        in: path
+        name: postgres_database_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/resetSuperuserPasswordWithID_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostgresDetailed'
+          description: Superuser password is updated
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Reset super-user password of the Postgres database
+      tags:
+      - Postgres
+  /project/{project_id}/location/{location}/postgres/id/{postgres_database_id}/restore:
+    post:
+      operationId: restorePostgresDatabaseWithID
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Postgres database ID
+        explode: false
+        in: path
+        name: postgres_database_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/restorePostgresDatabaseWithID_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Postgres'
+          description: Postgres database is restored successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Restore a new Postgres database in a specific location of a project
+        with ID
+      tags:
+      - Postgres
+  /project/{project_id}/location/{location}/postgres/{postgres_database_name}:
+    delete:
+      operationId: deletePostgresDatabase
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Postgres database name
+        explode: false
+        in: path
+        name: postgres_database_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Postgres database is deleted successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Delete a specific Postgres database
+      tags:
+      - Postgres
+    get:
+      operationId: getPostgresDatabaseDetails
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Postgres database name
+        explode: false
+        in: path
+        name: postgres_database_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostgresDetailed'
+          description: Details of the Postgres database
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Get details of a specific Postgres database in a location
+      tags:
+      - Postgres
+    post:
+      operationId: createPostgresDatabase
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Postgres database name
+        explode: false
+        in: path
+        name: postgres_database_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createPostgresDatabase_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostgresDetailed'
+          description: Postgres database is created successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Create a new Postgres database in a specific location of a project
+      tags:
+      - Postgres
+  /project/{project_id}/location/{location}/postgres/{postgres_database_name}/firewall-rule:
+    post:
+      operationId: createLocationPostgresFirewallRule
+      parameters:
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Postgres database name
+        explode: false
+        in: path
+        name: postgres_database_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createLocationPostgresFirewallRuleWithId_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostgresFirewallRule'
+          description: Firewall rule created successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Create a new postgres firewall rule
+      tags:
+      - Postgres Firewall Rule
+  /project/{project_id}/location/{location}/postgres/{postgres_database_name}/firewall-rule/{firewall_rule_id}:
+    delete:
+      operationId: deleteLocationPostgresFirewallRule
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Postgres database name
+        explode: false
+        in: path
+        name: postgres_database_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ID of the firewall rule
+        explode: false
+        in: path
+        name: firewall_rule_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Firewall rule deleted successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Delete a specific firewall rule
+      tags:
+      - Firewall Rule
+  /project/{project_id}/location/{location}/postgres/{postgres_database_name}/metric-destination:
+    post:
+      operationId: createLocationPostgresMetricDestination
+      parameters:
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Postgres database name
+        explode: false
+        in: path
+        name: postgres_database_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createLocationPostgresMetricDestination_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostgresDetailed'
+          description: Postgres Metric Destiantion created successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Create a new Postgres Metric Destination
+      tags:
+      - Postgres Metric Destination
+  /project/{project_id}/location/{location}/postgres/{postgres_database_name}/metric-destination/{metric_destination_id}:
+    delete:
+      operationId: deleteLocationPostgresMetricDestination
+      parameters:
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Postgres Metric Destination ID
+        explode: false
+        in: path
+        name: metric_destination_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Postgres database name
+        explode: false
+        in: path
+        name: postgres_database_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Metric Destination deleted successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Delete a specific Metric Destination
+      tags:
+      - Postgres Metric Destination
+  /project/{project_id}/location/{location}/postgres/{postgres_database_name}/reset-superuser-password:
+    post:
+      operationId: resetSuperuserPassword
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Postgres database name
+        explode: false
+        in: path
+        name: postgres_database_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/resetSuperuserPasswordWithID_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostgresDetailed'
+          description: Superuser password is updated
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Reset superuser password of the Postgres database
+      tags:
+      - Postgres
+  /project/{project_id}/location/{location}/postgres/{postgres_database_name}/restore:
+    post:
+      operationId: restorePostgresDatabase
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Postgres database name
+        explode: false
+        in: path
+        name: postgres_database_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/restorePostgresDatabaseWithID_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostgresDetailed'
+          description: Postgres database is restored successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Restore a new Postgres database in a specific location of a project
+      tags:
+      - Postgres
+  /project/{project_id}/location/{location}/private-subnet:
+    get:
+      operationId: listLocationPrivateSubnets
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Pagination - Start after
+        explode: true
+        in: query
+        name: start_after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Pagination - Page size
+        explode: true
+        in: query
+        name: page_size
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      - description: Pagination - Order column
+        explode: true
+        in: query
+        name: order_column
+        required: false
+        schema:
+          default: id
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listLocationPrivateSubnets_200_response'
+          description: A list of Private Subnets in a location
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: List Private Subnets in a specific location of a project
+      tags:
+      - Private Subnet
+  /project/{project_id}/location/{location}/private-subnet/id/{private_subnet_id}:
+    delete:
+      operationId: deletePSWithId
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Private subnet ID
+        explode: false
+        in: path
+        name: private_subnet_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Private Subnet is deleted successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Delete a specific Private Subnet with ID
+      tags:
+      - Private Subnet
+    get:
+      operationId: getPSDetailsWithId
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Private subnet ID
+        explode: false
+        in: path
+        name: private_subnet_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateSubnet'
+          description: Details of the private subnet
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Get details of a specific Private Subnet in a location with ID
+      tags:
+      - Private Subnet
+  /project/{project_id}/location/{location}/private-subnet/{private_subnet_name}:
+    delete:
+      operationId: deletePrivateSubnet
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Private subnet name
+        explode: false
+        in: path
+        name: private_subnet_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Private Subnet is deleted successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Delete a specific Private Subnet
+      tags:
+      - Private Subnet
+    get:
+      operationId: getPrivateSubnetDetails
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Private subnet name
+        explode: false
+        in: path
+        name: private_subnet_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateSubnet'
+          description: Details of the private subnet
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Get details of a specific Private Subnet in a location
+      tags:
+      - Private Subnet
+    post:
+      operationId: createPrivateSubnet
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Private subnet name
+        explode: false
+        in: path
+        name: private_subnet_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createPrivateSubnet_request'
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateSubnet'
+          description: Private subnet is created successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Create a new Private Subnet in a specific location of a project
+      tags:
+      - Private Subnet
+  /project/{project_id}/location/{location}/vm:
+    get:
+      operationId: listLocationVMs
+      parameters:
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Pagination - Start after
+        explode: true
+        in: query
+        name: start_after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Pagination - Page size
+        explode: true
+        in: query
+        name: page_size
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      - description: Pagination - Order column
+        explode: true
+        in: query
+        name: order_column
+        required: false
+        schema:
+          default: id
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listLocationVMs_200_response'
+          description: A list of VMs
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: List VMs in a specific location of a project
+      tags:
+      - Virtual Machine
+  /project/{project_id}/location/{location}/vm/id/{vm_id}:
+    delete:
+      operationId: deleteVMWithId
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Virtual machine ID
+        explode: false
+        in: path
+        name: vm_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: VM deleted successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Delete a specific VM with ID
+      tags:
+      - Virtual Machine
+    get:
+      operationId: getVMDetailsWithId
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Virtual machine ID
+        explode: false
+        in: path
+        name: vm_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VmDetailed'
+          description: Details of the VM
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Get details of a specific VM in a location with ID
+      tags:
+      - Virtual Machine
+  /project/{project_id}/location/{location}/vm/{vm_name}:
+    delete:
+      operationId: deleteVM
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Virtual machine name
+        explode: false
+        in: path
+        name: vm_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: VM deleted successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Delete a specific VM
+      tags:
+      - Virtual Machine
+    get:
+      operationId: getVMDetails
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Virtual machine name
+        explode: false
+        in: path
+        name: vm_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VmDetailed'
+          description: Details of the VM
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Get details of a specific VM in a location
+      tags:
+      - Virtual Machine
+    post:
+      operationId: createVM
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Virtual machine name
+        explode: false
+        in: path
+        name: vm_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createVM_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VmDetailed'
+          description: Virtual machine created successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Create a new VM in a specific location of a project
+      tags:
+      - Virtual Machine
+  /project/{project_id}/postgres:
+    get:
+      operationId: listPostgresDatabases
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Pagination - Start after
+        explode: true
+        in: query
+        name: start_after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Pagination - Page size
+        explode: true
+        in: query
+        name: page_size
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      - description: Pagination - Order column
+        explode: true
+        in: query
+        name: order_column
+        required: false
+        schema:
+          default: id
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listLocationPostgresDatabases_200_response'
+          description: A list of Postgres databases
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: List visible Postgres databases
+      tags:
+      - Postgres
+  /project/{project_id}/private-subnet:
+    get:
+      operationId: listPSs
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Pagination - Start after
+        explode: true
+        in: query
+        name: start_after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Pagination - Page size
+        explode: true
+        in: query
+        name: page_size
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      - description: Pagination - Order column
+        explode: true
+        in: query
+        name: order_column
+        required: false
+        schema:
+          default: id
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listLocationPrivateSubnets_200_response'
+          description: A list of private subnets
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: List visible Private Subnets
+      tags:
+      - Private Subnet
+  /project/{project_id}/vm:
+    get:
+      operationId: listProjectVMs
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Pagination - Start after
+        explode: true
+        in: query
+        name: start_after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Pagination - Page size
+        explode: true
+        in: query
+        name: page_size
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      - description: Pagination - Order column
+        explode: true
+        in: query
+        name: order_column
+        required: false
+        schema:
+          default: id
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listLocationVMs_200_response'
+          description: Return the list of all VMs visible created under the given
+            project and visible to the logged in user
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: List all VMs created under the given project ID and visible to logged
+        in user
+      tags:
+      - Virtual Machine
+components:
+  parameters:
+    firewall_id:
+      description: ID of the firewall
+      explode: false
+      in: path
+      name: firewall_id
+      required: true
+      schema:
+        type: string
+      style: simple
+    firewall_name:
+      description: Name of the firewall
+      explode: false
+      in: path
+      name: firewall_name
+      required: true
+      schema:
+        type: string
+      style: simple
+    firewall_rule_id:
+      description: ID of the firewall rule
+      explode: false
+      in: path
+      name: firewall_rule_id
+      required: true
+      schema:
+        type: string
+      style: simple
+    load_balancer_id:
+      description: ID of the load balancer
+      explode: false
+      in: path
+      name: load_balancer_id
+      required: true
+      schema:
+        type: string
+      style: simple
+    load_balancer_name:
+      description: Name of the load balancer
+      explode: false
+      in: path
+      name: load_balancer_name
+      required: true
+      schema:
+        type: string
+      style: simple
+    location:
+      description: The Ubicloud location/region
+      explode: false
+      in: path
+      name: location
+      required: true
+      schema:
+        example: eu-central-h1
+        type: string
+      style: simple
+    metric_destination_id:
+      description: Postgres Metric Destination ID
+      explode: false
+      in: path
+      name: metric_destination_id
+      required: true
+      schema:
+        type: string
+      style: simple
+    order_column:
+      description: Pagination - Order column
+      explode: true
+      in: query
+      name: order_column
+      required: false
+      schema:
+        default: id
+        type: string
+      style: form
+    page_size:
+      description: Pagination - Page size
+      explode: true
+      in: query
+      name: page_size
+      required: false
+      schema:
+        default: 10
+        type: integer
+      style: form
+    postgres_database_id:
+      description: Postgres database ID
+      explode: false
+      in: path
+      name: postgres_database_id
+      required: true
+      schema:
+        type: string
+      style: simple
+    postgres_database_name:
+      description: Postgres database name
+      explode: false
+      in: path
+      name: postgres_database_name
+      required: true
+      schema:
+        type: string
+      style: simple
+    private_subnet_id:
+      description: Private subnet ID
+      explode: false
+      in: path
+      name: private_subnet_id
+      required: true
+      schema:
+        type: string
+      style: simple
+    private_subnet_name:
+      description: Private subnet name
+      explode: false
+      in: path
+      name: private_subnet_name
+      required: true
+      schema:
+        type: string
+      style: simple
+    project_id:
+      description: ID of the project
+      explode: false
+      in: path
+      name: project_id
+      required: true
+      schema:
+        type: string
+      style: simple
+    start_after:
+      description: Pagination - Start after
+      explode: true
+      in: query
+      name: start_after
+      required: false
+      schema:
+        type: string
+      style: form
+    vm_id:
+      description: Virtual machine ID
+      explode: false
+      in: path
+      name: vm_id
+      required: true
+      schema:
+        type: string
+      style: simple
+    vm_name:
+      description: Virtual machine name
+      explode: false
+      in: path
+      name: vm_name
+      required: true
+      schema:
+        type: string
+      style: simple
+  responses:
+    Error:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: an error response
+  schemas:
+    Error:
+      additionalProperties: false
+      properties:
+        error:
+          $ref: '#/components/schemas/Error_error'
+      required:
+      - error
+      type: object
+    Firewall:
+      additionalProperties: false
+      example:
+        firewall_rules:
+        - port_range: port_range
+          cidr: cidr
+          id: id
+        - port_range: port_range
+          cidr: cidr
+          id: id
+        name: name
+        description: description
+        location: location
+        id: id
+      properties:
+        description:
+          description: Description of the firewall
+          type: string
+        firewall_rules:
+          description: List of firewall rules
+          items:
+            $ref: '#/components/schemas/FirewallRule'
+          type: array
+        id:
+          description: ID of the firewall
+          type: string
+        location:
+          description: Location of the the firewall
+          type: string
+        name:
+          description: Name of the firewall
+          type: string
+      required:
+      - description
+      - firewall_rules
+      - id
+      - location
+      - name
+      type: object
+    FirewallDetailed:
+      additionalProperties: false
+      allOf:
+      - $ref: '#/components/schemas/Firewall'
+      - $ref: '#/components/schemas/FirewallDetailed_allOf'
+      type: object
+    FirewallRule:
+      additionalProperties: false
+      example:
+        port_range: port_range
+        cidr: cidr
+        id: id
+      properties:
+        cidr:
+          description: CIDR of the firewall rule
+          type: string
+        id:
+          description: ID of the firewall rule
+          type: string
+        port_range:
+          description: Port range of the firewall rule
+          type: string
+      required:
+      - cidr
+      - id
+      - port_range
+      type: object
+    LoadBalancer:
+      additionalProperties: false
+      example:
+        src_port: 1
+        hostname: hostname
+        health_check_protocol: health_check_protocol
+        dst_port: 6
+        name: name
+        health_check_endpoint: health_check_endpoint
+        id: id
+        algorithm: algorithm
+      properties:
+        algorithm:
+          description: Algorithm of the Load Balancer
+          type: string
+        dst_port:
+          description: Destination port for the Load Balancer
+          type: integer
+        health_check_endpoint:
+          description: Health check endpoint URL
+          type: string
+        health_check_protocol:
+          description: Health check endpoint protocol
+          type: string
+        hostname:
+          description: Hostname of the Load Balancer
+          type: string
+        id:
+          description: ID of the Load Balancer
+          type: string
+        name:
+          description: Name of the Load Balancer
+          type: string
+        src_port:
+          description: Source port for the Load Balancer
+          type: integer
+      required:
+      - algorithm
+      - dst_port
+      - health_check_endpoint
+      - health_check_protocol
+      - hostname
+      - id
+      - name
+      - src_port
+      type: object
+    LoadBalancerDetailed:
+      additionalProperties: false
+      allOf:
+      - $ref: '#/components/schemas/LoadBalancer'
+      - $ref: '#/components/schemas/LoadBalancerDetailed_allOf'
+      type: object
+    Nic:
+      additionalProperties: false
+      example:
+        private_ipv4: private_ipv4
+        private_ipv6: private_ipv6
+        name: name
+        id: id
+        vm_name: vm_name
+      properties:
+        id:
+          description: ID of the NIC
+          type: string
+        name:
+          description: Name of the NIC
+          type: string
+        private_ipv4:
+          description: Private IPv4 address
+          format: ipv4
+          type: string
+        private_ipv6:
+          description: Private IPv6 address
+          format: ipv6
+          type: string
+        vm_name:
+          description: Name of the VM
+          nullable: true
+          type: string
+      required:
+      - id
+      - name
+      - private_ipv4
+      - private_ipv6
+      - vm_name
+      type: object
+    Postgres:
+      additionalProperties: false
+      example:
+        flavor: flavor
+        name: name
+        vm_size: vm_size
+        location: location
+        id: id
+        state: state
+        version: version
+        ha_type: ha_type
+        storage_size_gib: 6
+      properties:
+        flavor:
+          description: Kind of Postgres database
+          type: string
+        ha_type:
+          description: High availability type
+          type: string
+        id:
+          description: ID of the Postgres database
+          type: string
+        location:
+          description: Location of the Postgres database
+          type: string
+        name:
+          description: Name of the Postgres database
+          type: string
+        state:
+          description: State of the Postgres database
+          type: string
+        storage_size_gib:
+          description: Storage size in GiB
+          type: integer
+        version:
+          description: Postgres version
+          type: string
+        vm_size:
+          description: Size of the underlying VM
+          type: string
+      required:
+      - flavor
+      - ha_type
+      - id
+      - location
+      - name
+      - state
+      - storage_size_gib
+      - version
+      - vm_size
+      type: object
+    PostgresDetailed:
+      additionalProperties: false
+      allOf:
+      - $ref: '#/components/schemas/Postgres'
+      - $ref: '#/components/schemas/PostgresDetailed_allOf'
+      type: object
+    PostgresFirewallRule:
+      additionalProperties: false
+      example:
+        cidr: cidr
+        id: id
+      properties:
+        cidr:
+          description: CIDR of the Postgres firewall rule
+          type: string
+        id:
+          description: ID of the Postgres firewall rule
+          type: string
+      required:
+      - cidr
+      - id
+      type: object
+    PrivateSubnet:
+      additionalProperties: false
+      example:
+        net4: net4
+        name: name
+        nics:
+        - private_ipv4: private_ipv4
+          private_ipv6: private_ipv6
+          name: name
+          id: id
+          vm_name: vm_name
+        - private_ipv4: private_ipv4
+          private_ipv6: private_ipv6
+          name: name
+          id: id
+          vm_name: vm_name
+        firewalls:
+        - firewall_rules:
+          - port_range: port_range
+            cidr: cidr
+            id: id
+          - port_range: port_range
+            cidr: cidr
+            id: id
+          name: name
+          description: description
+          location: location
+          id: id
+        - firewall_rules:
+          - port_range: port_range
+            cidr: cidr
+            id: id
+          - port_range: port_range
+            cidr: cidr
+            id: id
+          name: name
+          description: description
+          location: location
+          id: id
+        location: location
+        net6: net6
+        id: id
+        state: state
+      properties:
+        firewalls:
+          items:
+            $ref: '#/components/schemas/Firewall'
+          type: array
+        id:
+          description: ID of the subnet
+          type: string
+        location:
+          description: Location of the subnet
+          type: string
+        name:
+          description: Name of the subnet
+          type: string
+        net4:
+          description: IPv4 CIDR of the subnet
+          type: string
+        net6:
+          description: IPv6 CIDR of the subnet
+          type: string
+        nics:
+          description: List of NICs
+          items:
+            $ref: '#/components/schemas/Nic'
+          type: array
+        state:
+          description: State of the subnet
+          type: string
+      required:
+      - firewalls
+      - id
+      - location
+      - name
+      - net4
+      - net6
+      - nics
+      - state
+      type: object
+    Project:
+      additionalProperties: false
+      example:
+        name: my-project
+        discount: 10
+        id: pjw92xhhqjdy4g72xng1ubkda6
+        credit: 25.4
+      properties:
+        credit:
+          description: Remaining credit of the project in $
+          example: 25.4
+          format: float
+          type: number
+        discount:
+          description: Discount of the project as percentage
+          example: 10
+          type: integer
+        id:
+          example: pjw92xhhqjdy4g72xng1ubkda6
+          type: string
+        name:
+          description: Name of the project
+          example: my-project
+          type: string
+      required:
+      - credit
+      - discount
+      - id
+      - name
+      type: object
+    Vm:
+      additionalProperties: false
+      example:
+        size: size
+        name: my-vm-name
+        location: eu-central-h1
+        id: vmw12ouhqjdy4g72xng1ubkda6
+        state: state
+        ip4: ip4
+        ip6: ip6
+        storage_size_gib: 6
+        unix_user: unix_user
+      properties:
+        id:
+          description: ID of the VM
+          example: vmw12ouhqjdy4g72xng1ubkda6
+          type: string
+        ip4:
+          description: IPv4 address
+          format: ipv4
+          nullable: true
+          type: string
+        ip6:
+          description: IPv6 address
+          format: ipv6
+          nullable: true
+          type: string
+        location:
+          description: Location of the VM
+          example: eu-central-h1
+          type: string
+        name:
+          description: Name of the VM
+          example: my-vm-name
+          type: string
+        size:
+          description: Size of the underlying VM
+          type: string
+        state:
+          description: State of the VM
+          type: string
+        storage_size_gib:
+          description: Storage size in GiB
+          type: integer
+        unix_user:
+          description: Unix user of the VM
+          type: string
+      required:
+      - id
+      - ip4
+      - ip6
+      - location
+      - name
+      - size
+      - state
+      - storage_size_gib
+      - unix_user
+      type: object
+    VmDetailed:
+      additionalProperties: false
+      allOf:
+      - $ref: '#/components/schemas/Vm'
+      - $ref: '#/components/schemas/VmDetailed_allOf'
+      type: object
+    login_request:
+      additionalProperties: false
+      properties:
+        login:
+          example: user@mail.com
+          type: string
+        password:
+          example: password
+          type: string
+      required:
+      - login
+      - password
+      type: object
+    login_200_response:
+      additionalProperties: false
+      example:
+        success: You have been logged in
+      properties:
+        success:
+          example: You have been logged in
+          type: string
+      required:
+      - success
+      type: object
+    listProjects_200_response:
+      additionalProperties: false
+      example:
+        count: 0
+        items:
+        - name: my-project
+          discount: 10
+          id: pjw92xhhqjdy4g72xng1ubkda6
+          credit: 25.4
+        - name: my-project
+          discount: 10
+          id: pjw92xhhqjdy4g72xng1ubkda6
+          credit: 25.4
+      properties:
+        count:
+          type: integer
+        items:
+          items:
+            $ref: '#/components/schemas/Project'
+          type: array
+      required:
+      - count
+      - items
+      type: object
+    createProject_request:
+      additionalProperties: false
+      properties:
+        name:
+          example: my-project-name
+          type: string
+      required:
+      - name
+      type: object
+    getFirewall_200_response:
+      additionalProperties: false
+      example:
+        count: 0
+        items:
+        - firewall_rules:
+          - port_range: port_range
+            cidr: cidr
+            id: id
+          - port_range: port_range
+            cidr: cidr
+            id: id
+          name: name
+          description: description
+          location: location
+          id: id
+        - firewall_rules:
+          - port_range: port_range
+            cidr: cidr
+            id: id
+          - port_range: port_range
+            cidr: cidr
+            id: id
+          name: name
+          description: description
+          location: location
+          id: id
+      properties:
+        count:
+          type: integer
+        items:
+          items:
+            $ref: '#/components/schemas/Firewall'
+          type: array
+      required:
+      - count
+      - items
+      type: object
+    createFirewall_request:
+      additionalProperties: false
+      properties:
+        description:
+          description: Description of the firewall
+          type: string
+        name:
+          description: Name of the firewall
+          type: string
+      required:
+      - name
+      type: object
+    createFirewallRule_request:
+      additionalProperties: false
+      properties:
+        cidr:
+          description: CIDR of the firewall rule
+          type: string
+        firewall_id:
+          type: string
+        port_range:
+          description: Port range of the firewall rule
+          type: string
+        project_id:
+          type: string
+      required:
+      - cidr
+      type: object
+    listLoadBalancers_200_response:
+      additionalProperties: false
+      example:
+        count: 0
+        items:
+        - src_port: 1
+          hostname: hostname
+          health_check_protocol: health_check_protocol
+          dst_port: 6
+          name: name
+          health_check_endpoint: health_check_endpoint
+          id: id
+          algorithm: algorithm
+        - src_port: 1
+          hostname: hostname
+          health_check_protocol: health_check_protocol
+          dst_port: 6
+          name: name
+          health_check_endpoint: health_check_endpoint
+          id: id
+          algorithm: algorithm
+      properties:
+        count:
+          type: integer
+        items:
+          items:
+            $ref: '#/components/schemas/LoadBalancer'
+          type: array
+      required:
+      - count
+      - items
+      type: object
+    createLoadBalancer_request:
+      additionalProperties: false
+      properties:
+        algorithm:
+          description: Algorithm of the Load Balancer
+          type: string
+        dst_port:
+          description: Destination port for the Load Balancer
+          type: integer
+        health_check_endpoint:
+          description: Health check endpoint URL
+          type: string
+        health_check_protocol:
+          description: Health check endpoint protocol
+          type: string
+        private_subnet_id:
+          description: ID of Private Subnet
+          type: string
+        src_port:
+          description: Source port for the Load Balancer
+          type: integer
+      required:
+      - algorithm
+      - dst_port
+      - health_check_protocol
+      - private_subnet_id
+      - src_port
+      type: object
+    actionLocationFirewallAttachSubnet_request:
+      additionalProperties: false
+      properties:
+        private_subnet_id:
+          description: Private subnet id to attach
+          type: string
+      required:
+      - private_subnet_id
+      type: object
+    actionLocationFirewallDetachSubnet_request:
+      additionalProperties: false
+      properties:
+        private_subnet_id:
+          description: Private subnet id to detach
+          type: string
+      required:
+      - private_subnet_id
+      type: object
+    createLocationFirewall_request:
+      additionalProperties: false
+      properties:
+        description:
+          description: Description of the firewall
+          type: string
+      type: object
+    patchLocationLoadBalancer_request:
+      additionalProperties: false
+      properties:
+        algorithm:
+          description: Algorithm of the Load Balancer
+          type: string
+        dst_port:
+          description: Destination port for the Load Balancer
+          type: integer
+        health_check_endpoint:
+          description: Health check endpoint URL
+          type: string
+        src_port:
+          description: Source port for the Load Balancer
+          type: integer
+        vms:
+          description: List of VM apids for the Load Balancer
+          items:
+            type: string
+          type: array
+      type: object
+    attachVmLocationLoadBalancer_request:
+      additionalProperties: false
+      properties:
+        vm_id:
+          description: Apid of VM to attach to Load Balancer
+          type: string
+      required:
+      - vm_id
+      type: object
+    detachVmLocationLoadBalancer_request:
+      additionalProperties: false
+      properties:
+        vm_id:
+          description: Apid of VM to detach from Load Balancer
+          type: string
+      required:
+      - vm_id
+      type: object
+    listLocationPostgresDatabases_200_response:
+      additionalProperties: false
+      example:
+        count: 0
+        items:
+        - flavor: flavor
+          name: name
+          vm_size: vm_size
+          location: location
+          id: id
+          state: state
+          version: version
+          ha_type: ha_type
+          storage_size_gib: 6
+        - flavor: flavor
+          name: name
+          vm_size: vm_size
+          location: location
+          id: id
+          state: state
+          version: version
+          ha_type: ha_type
+          storage_size_gib: 6
+      properties:
+        count:
+          type: integer
+        items:
+          items:
+            $ref: '#/components/schemas/Postgres'
+          type: array
+      required:
+      - count
+      - items
+      type: object
+    listLocationPostgresFirewallRules_200_response:
+      additionalProperties: false
+      example:
+        count: 0
+        items:
+        - cidr: cidr
+          id: id
+        - cidr: cidr
+          id: id
+      properties:
+        count:
+          type: integer
+        items:
+          items:
+            $ref: '#/components/schemas/PostgresFirewallRule'
+          type: array
+      required:
+      - count
+      - items
+      type: object
+    createLocationPostgresFirewallRuleWithId_request:
+      additionalProperties: false
+      properties:
+        cidr:
+          description: CIDR of the firewall rule
+          type: string
+      required:
+      - cidr
+      type: object
+    createLocationPostgresFirewallRuleWithIdWithId_request:
+      additionalProperties: false
+      properties:
+        cidr:
+          description: CIDR of the Postgres firewall rule
+          type: string
+      required:
+      - cidr
+      type: object
+    resetSuperuserPasswordWithID_request:
+      additionalProperties: false
+      properties:
+        password:
+          type: string
+      required:
+      - password
+      type: object
+    restorePostgresDatabaseWithID_request:
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        restore_target:
+          type: string
+      required:
+      - name
+      - restore_target
+      type: object
+    createPostgresDatabase_request:
+      additionalProperties: false
+      properties:
+        flavor:
+          description: Kind of database
+          type: string
+        ha_type:
+          description: High availability type
+          type: string
+        size:
+          description: Requested size for the underlying VM
+          type: string
+        storage_size:
+          description: Requested storage size in GiB
+          type: integer
+      required:
+      - size
+      type: object
+    createLocationPostgresMetricDestination_request:
+      additionalProperties: false
+      properties:
+        password:
+          description: Password for the Metric Destination
+          type: string
+        url:
+          description: URL for the Metric Destination
+          type: string
+        username:
+          description: Username for the Metric Destination
+          type: string
+      required:
+      - password
+      - url
+      - username
+      type: object
+    listLocationPrivateSubnets_200_response:
+      additionalProperties: false
+      example:
+        count: 0
+        items:
+        - net4: net4
+          name: name
+          nics:
+          - private_ipv4: private_ipv4
+            private_ipv6: private_ipv6
+            name: name
+            id: id
+            vm_name: vm_name
+          - private_ipv4: private_ipv4
+            private_ipv6: private_ipv6
+            name: name
+            id: id
+            vm_name: vm_name
+          firewalls:
+          - firewall_rules:
+            - port_range: port_range
+              cidr: cidr
+              id: id
+            - port_range: port_range
+              cidr: cidr
+              id: id
+            name: name
+            description: description
+            location: location
+            id: id
+          - firewall_rules:
+            - port_range: port_range
+              cidr: cidr
+              id: id
+            - port_range: port_range
+              cidr: cidr
+              id: id
+            name: name
+            description: description
+            location: location
+            id: id
+          location: location
+          net6: net6
+          id: id
+          state: state
+        - net4: net4
+          name: name
+          nics:
+          - private_ipv4: private_ipv4
+            private_ipv6: private_ipv6
+            name: name
+            id: id
+            vm_name: vm_name
+          - private_ipv4: private_ipv4
+            private_ipv6: private_ipv6
+            name: name
+            id: id
+            vm_name: vm_name
+          firewalls:
+          - firewall_rules:
+            - port_range: port_range
+              cidr: cidr
+              id: id
+            - port_range: port_range
+              cidr: cidr
+              id: id
+            name: name
+            description: description
+            location: location
+            id: id
+          - firewall_rules:
+            - port_range: port_range
+              cidr: cidr
+              id: id
+            - port_range: port_range
+              cidr: cidr
+              id: id
+            name: name
+            description: description
+            location: location
+            id: id
+          location: location
+          net6: net6
+          id: id
+          state: state
+      properties:
+        count:
+          type: integer
+        items:
+          items:
+            $ref: '#/components/schemas/PrivateSubnet'
+          type: array
+      required:
+      - count
+      - items
+      type: object
+    createPrivateSubnet_request:
+      additionalProperties: false
+      properties:
+        firewall_id:
+          type: string
+      type: object
+    listLocationVMs_200_response:
+      additionalProperties: false
+      example:
+        count: 0
+        items:
+        - size: size
+          name: my-vm-name
+          location: eu-central-h1
+          id: vmw12ouhqjdy4g72xng1ubkda6
+          state: state
+          ip4: ip4
+          ip6: ip6
+          storage_size_gib: 6
+          unix_user: unix_user
+        - size: size
+          name: my-vm-name
+          location: eu-central-h1
+          id: vmw12ouhqjdy4g72xng1ubkda6
+          state: state
+          ip4: ip4
+          ip6: ip6
+          storage_size_gib: 6
+          unix_user: unix_user
+      properties:
+        count:
+          type: integer
+        items:
+          items:
+            $ref: '#/components/schemas/Vm'
+          type: array
+      required:
+      - count
+      - items
+      type: object
+    createVM_request:
+      additionalProperties: false
+      properties:
+        boot_image:
+          description: Boot image of the VM
+          type: string
+        enable_ip4:
+          description: Enable IPv4
+          type: boolean
+        private_subnet_id:
+          description: ID of the private subnet
+          type: string
+        public_key:
+          description: Public SSH key for the VM
+          type: string
+        size:
+          description: Size of the VM
+          type: string
+        storage_size:
+          description: Requested storage size in GiB
+          type: integer
+        unix_user:
+          description: Unix user of the VM
+          type: string
+      required:
+      - public_key
+      type: object
+    Error_error:
+      additionalProperties: false
+      properties:
+        code:
+          example: 401
+          type: integer
+        message:
+          example: There was an error logging in
+          type: string
+        type:
+          example: InvalidCredentials
+          type: string
+        details:
+          nullable: true
+          type: object
+      required:
+      - code
+      - message
+      - type
+      type: object
+    FirewallDetailed_allOf:
+      properties:
+        private_subnets:
+          description: List of private subnets
+          items:
+            type: string
+          type: array
+      required:
+      - private_subnets
+      type: object
+      example: null
+    LoadBalancerDetailed_allOf:
+      properties:
+        location:
+          description: Location of the Load Balancer
+          type: string
+        subnet:
+          description: Subnet of the Load Balancer
+          type: string
+        vms:
+          items:
+            $ref: '#/components/schemas/Vm'
+          type: array
+      required:
+      - location
+      - subnet
+      - vms
+      type: object
+      example: null
+    PostgresDetailed_allOf:
+      properties:
+        connection_string:
+          description: Connection string to the Postgres database
+          nullable: true
+          type: string
+        earliest_restore_time:
+          description: Earliest restore time (if primary)
+          nullable: true
+          type: string
+        firewall_rules:
+          description: List of Postgres firewall rules
+          items:
+            $ref: '#/components/schemas/PostgresFirewallRule'
+          type: array
+        latest_restore_time:
+          description: Latest restore time (if primary)"
+          type: string
+        primary:
+          description: Is the database primary
+          type: boolean
+      required:
+      - connection_string
+      - earliest_restore_time
+      - firewall_rules
+      - latest_restore_time
+      - primary
+      type: object
+      example: null
+    VmDetailed_allOf:
+      properties:
+        firewalls:
+          description: List of firewalls
+          items:
+            $ref: '#/components/schemas/Firewall'
+          type: array
+        private_ipv4:
+          description: Private IPv4 address
+          format: ipv4
+          type: string
+        private_ipv6:
+          description: Private IPv6 address
+          format: ipv6
+          type: string
+        subnet:
+          description: Subnet of the VM
+          type: string
+        unix_user:
+          description: Unix user of the VM
+          type: string
+      required:
+      - firewalls
+      - private_ipv4
+      - private_ipv6
+      - subnet
+      - unix_user
+      type: object
+      example: null
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
