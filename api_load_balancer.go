@@ -201,7 +201,7 @@ func (a *LoadBalancerApiService) CreateLoadBalancerExecute(r ApiCreateLoadBalanc
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/project/{project_id}/load-balancer/{load_balancer_name}"
+	localVarPath := localBasePath + "/project/{project_id}/load-balancer"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"load_balancer_name"+"}", url.PathEscape(parameterValueToString(r.loadBalancerName, "loadBalancerName")), -1)
 

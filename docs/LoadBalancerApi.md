@@ -5,7 +5,7 @@ All URIs are relative to *https://api.ubicloud.com*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**AttachVmLocationLoadBalancer**](LoadBalancerApi.md#AttachVmLocationLoadBalancer) | **Post** /project/{project_id}/location/{location}/load-balancer/{load_balancer_name}/attach-vm | Attach a VM to a Load Balancer in a specific location of a project
-[**CreateLoadBalancer**](LoadBalancerApi.md#CreateLoadBalancer) | **Post** /project/{project_id}/load-balancer/{load_balancer_name} | Create a new Load Balancer in a project
+[**CreateLoadBalancer**](LoadBalancerApi.md#CreateLoadBalancer) | **Post** /project/{project_id}/load-balancer | Create a new Load Balancer in a project
 [**CreateLocationLoadBalancer**](LoadBalancerApi.md#CreateLocationLoadBalancer) | **Post** /project/{project_id}/location/{location}/load-balancer/{load_balancer_name} | Create a new Load Balancer in a specific location of a project
 [**DeleteLoadBalancer**](LoadBalancerApi.md#DeleteLoadBalancer) | **Delete** /project/{project_id}/location/{location}/load-balancer/{load_balancer_name} | Delete a specific Load Balancer
 [**DeleteLoadBalancerWithID**](LoadBalancerApi.md#DeleteLoadBalancerWithID) | **Delete** /project/{project_id}/location/{location}/load-balancer/id/{load_balancer_id} | Delete a specific Load Balancer with ID

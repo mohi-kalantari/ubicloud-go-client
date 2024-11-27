@@ -44,9 +44,8 @@ func Test_openapi_LoadBalancerApiService(t *testing.T) {
 		t.Skip("skip test") // remove to run test
 
 		var projectId string
-		var loadBalancerName string
 
-		resp, httpRes, err := apiClient.LoadBalancerApi.CreateLoadBalancer(context.Background(), projectId, loadBalancerName).Execute()
+		resp, httpRes, err := apiClient.LoadBalancerApi.CreateLoadBalancer(context.Background(), projectId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

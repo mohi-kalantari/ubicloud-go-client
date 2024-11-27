@@ -493,42 +493,6 @@ paths:
       summary: List Load Balancers in a specific project
       tags:
       - Load Balancer
-  /project/{project_id}/load-balancer/{load_balancer_name}:
-    get:
-      operationId: getLoadBalancer
-      parameters:
-      - description: ID of the project
-        explode: false
-        in: path
-        name: project_id
-        required: true
-        schema:
-          type: string
-        style: simple
-      - description: Name of the load balancer
-        explode: false
-        in: path
-        name: load_balancer_name
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LoadBalancerDetailed'
-          description: A list of Load Balancers in a specific project
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: an error response
-      summary: Get details of a specific Load Balancer
-      tags:
-      - Load Balancer
     post:
       operationId: createLoadBalancer
       parameters:
@@ -568,6 +532,42 @@ paths:
                 $ref: '#/components/schemas/Error'
           description: an error response
       summary: Create a new Load Balancer in a project
+      tags:
+      - Load Balancer
+  /project/{project_id}/load-balancer/{load_balancer_name}:
+    get:
+      operationId: getLoadBalancer
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Name of the load balancer
+        explode: false
+        in: path
+        name: load_balancer_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoadBalancerDetailed'
+          description: A list of Load Balancers in a specific project
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Get details of a specific Load Balancer
       tags:
       - Load Balancer
   /project/{project_id}/location/{location}/firewall:
