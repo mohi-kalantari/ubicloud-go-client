@@ -24,14 +24,14 @@ type LoadBalancerDetailedAllOf struct {
 	Location string `json:"location"`
 	// Subnet of the Load Balancer
 	Subnet string `json:"subnet"`
-	Vms []Vm `json:"vms"`
+	Vms []string `json:"vms"`
 }
 
 // NewLoadBalancerDetailedAllOf instantiates a new LoadBalancerDetailedAllOf object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewLoadBalancerDetailedAllOf(location string, subnet string, vms []Vm) *LoadBalancerDetailedAllOf {
+func NewLoadBalancerDetailedAllOf(location string, subnet string, vms []string) *LoadBalancerDetailedAllOf {
 	this := LoadBalancerDetailedAllOf{}
 	this.Location = location
 	this.Subnet = subnet
@@ -96,9 +96,9 @@ func (o *LoadBalancerDetailedAllOf) SetSubnet(v string) {
 }
 
 // GetVms returns the Vms field value
-func (o *LoadBalancerDetailedAllOf) GetVms() []Vm {
+func (o *LoadBalancerDetailedAllOf) GetVms() []string {
 	if o == nil {
-		var ret []Vm
+		var ret []string
 		return ret
 	}
 
@@ -107,7 +107,7 @@ func (o *LoadBalancerDetailedAllOf) GetVms() []Vm {
 
 // GetVmsOk returns a tuple with the Vms field value
 // and a boolean to check if the value has been set.
-func (o *LoadBalancerDetailedAllOf) GetVmsOk() ([]Vm, bool) {
+func (o *LoadBalancerDetailedAllOf) GetVmsOk() ([]string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -115,7 +115,7 @@ func (o *LoadBalancerDetailedAllOf) GetVmsOk() ([]Vm, bool) {
 }
 
 // SetVms sets field value
-func (o *LoadBalancerDetailedAllOf) SetVms(v []Vm) {
+func (o *LoadBalancerDetailedAllOf) SetVms(v []string) {
 	o.Vms = v
 }
 
