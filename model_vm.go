@@ -24,6 +24,8 @@ type Vm struct {
 	Id string `json:"id"`
 	// IPv4 address
 	Ip4 NullableString `json:"ip4"`
+	// Whether IPv4 is enabled
+	Ip4Enabled bool `json:"ip4_enabled"`
 	// IPv6 address
 	Ip6 NullableString `json:"ip6"`
 	// Location of the VM
@@ -44,10 +46,11 @@ type Vm struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewVm(id string, ip4 NullableString, ip6 NullableString, location string, name string, size string, state string, storageSizeGib int32, unixUser string) *Vm {
+func NewVm(id string, ip4 NullableString, ip4Enabled bool, ip6 NullableString, location string, name string, size string, state string, storageSizeGib int32, unixUser string) *Vm {
 	this := Vm{}
 	this.Id = id
 	this.Ip4 = ip4
+	this.Ip4Enabled = ip4Enabled
 	this.Ip6 = ip6
 	this.Location = location
 	this.Name = name
@@ -114,6 +117,30 @@ func (o *Vm) GetIp4Ok() (*string, bool) {
 // SetIp4 sets field value
 func (o *Vm) SetIp4(v string) {
 	o.Ip4.Set(&v)
+}
+
+// GetIp4Enabled returns the Ip4Enabled field value
+func (o *Vm) GetIp4Enabled() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.Ip4Enabled
+}
+
+// GetIp4EnabledOk returns a tuple with the Ip4Enabled field value
+// and a boolean to check if the value has been set.
+func (o *Vm) GetIp4EnabledOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Ip4Enabled, true
+}
+
+// SetIp4Enabled sets field value
+func (o *Vm) SetIp4Enabled(v bool) {
+	o.Ip4Enabled = v
 }
 
 // GetIp6 returns the Ip6 field value
@@ -298,6 +325,7 @@ func (o Vm) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
 	toSerialize["ip4"] = o.Ip4.Get()
+	toSerialize["ip4_enabled"] = o.Ip4Enabled
 	toSerialize["ip6"] = o.Ip6.Get()
 	toSerialize["location"] = o.Location
 	toSerialize["name"] = o.Name

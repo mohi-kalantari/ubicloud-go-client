@@ -54,6 +54,10 @@ type APIClient struct {
 
 	FirewallRuleApi *FirewallRuleApiService
 
+	KubernetesClusterApi *KubernetesClusterApiService
+
+	KubernetesVMApi *KubernetesVMApiService
+
 	LoadBalancerApi *LoadBalancerApiService
 
 	LoginApi *LoginApiService
@@ -89,6 +93,8 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	// API Services
 	c.FirewallApi = (*FirewallApiService)(&c.common)
 	c.FirewallRuleApi = (*FirewallRuleApiService)(&c.common)
+	c.KubernetesClusterApi = (*KubernetesClusterApiService)(&c.common)
+	c.KubernetesVMApi = (*KubernetesVMApiService)(&c.common)
 	c.LoadBalancerApi = (*LoadBalancerApiService)(&c.common)
 	c.LoginApi = (*LoginApiService)(&c.common)
 	c.PostgresApi = (*PostgresApiService)(&c.common)
