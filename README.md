@@ -103,6 +103,12 @@ Class | Method | HTTP request | Description
 *FirewallRuleApi* | [**GetFirewallRuleDetails**](docs/FirewallRuleApi.md#getfirewallruledetails) | **Get** /project/{project_id}/firewall/{firewall_name}/firewall-rule/{firewall_rule_id} | Get details of a firewall rule
 *FirewallRuleApi* | [**GetLocationFirewallFirewallRuleDetails**](docs/FirewallRuleApi.md#getlocationfirewallfirewallruledetails) | **Get** /project/{project_id}/location/{location}/firewall/{firewall_name}/firewall-rule/{firewall_rule_id} | Get details of a firewall rule
 *FirewallRuleApi* | [**GetLocationFirewallFirewallRuleDetailsWithId**](docs/FirewallRuleApi.md#getlocationfirewallfirewallruledetailswithid) | **Get** /project/{project_id}/location/{location}/firewall/id/{firewall_name}/firewall-rule/{firewall_rule_id} | Get details of a firewall rule
+*KubernetesClusterApi* | [**CreateLocationKubernetesCluster**](docs/KubernetesClusterApi.md#createlocationkubernetescluster) | **Post** /project/{project_id}/location/{location}/kubernetes-cluster/{kubernetes_cluster_name} | Create Kubernetes Cluster in a specific location of a project
+*KubernetesClusterApi* | [**GetKubernetesClusterDetails**](docs/KubernetesClusterApi.md#getkubernetesclusterdetails) | **Get** /project/{project_id}/location/{location}/kubernetes-cluster/{kubernetes_cluster_name} | Get details of a specific Kubernetes Cluster in a location
+*KubernetesClusterApi* | [**ListLocationKubernetesClusters**](docs/KubernetesClusterApi.md#listlocationkubernetesclusters) | **Get** /project/{project_id}/location/{location}/kubernetes-cluster | List kubernetes clusters in a specific location of a project
+*KubernetesVMApi* | [**CreateLocationKubernetesVM**](docs/KubernetesVMApi.md#createlocationkubernetesvm) | **Post** /project/{project_id}/location/{location}/kubernetes-vm/{kubernetes_vm_name} | Create Kubernetes VM in a specific location of a project
+*KubernetesVMApi* | [**GetKubernetesVMDetails**](docs/KubernetesVMApi.md#getkubernetesvmdetails) | **Get** /project/{project_id}/location/{location}/kubernetes-vm/{kubernetes_vm_name} | Get details of a specific Kubernetes VM in a location
+*KubernetesVMApi* | [**ListLocationKubernetesVMs**](docs/KubernetesVMApi.md#listlocationkubernetesvms) | **Get** /project/{project_id}/location/{location}/kubernetes-vm | List Kubernetes VMs in a specific location of a project
 *LoadBalancerApi* | [**AttachVmLocationLoadBalancer**](docs/LoadBalancerApi.md#attachvmlocationloadbalancer) | **Post** /project/{project_id}/location/{location}/load-balancer/{load_balancer_name}/attach-vm | Attach a VM to a Load Balancer in a specific location of a project
 *LoadBalancerApi* | [**CreateLoadBalancer**](docs/LoadBalancerApi.md#createloadbalancer) | **Post** /project/{project_id}/load-balancer/{load_balancer_name} | Create a new Load Balancer in a project
 *LoadBalancerApi* | [**CreateLocationLoadBalancer**](docs/LoadBalancerApi.md#createlocationloadbalancer) | **Post** /project/{project_id}/location/{location}/load-balancer/{load_balancer_name} | Create a new Load Balancer in a specific location of a project
@@ -164,6 +170,8 @@ Class | Method | HTTP request | Description
  - [CreateFirewallRuleRequest](docs/CreateFirewallRuleRequest.md)
  - [CreateLoadBalancerRequest](docs/CreateLoadBalancerRequest.md)
  - [CreateLocationFirewallRequest](docs/CreateLocationFirewallRequest.md)
+ - [CreateLocationKubernetesClusterRequest](docs/CreateLocationKubernetesClusterRequest.md)
+ - [CreateLocationKubernetesVMRequest](docs/CreateLocationKubernetesVMRequest.md)
  - [CreateLocationPostgresFirewallRuleWithIdRequest](docs/CreateLocationPostgresFirewallRuleWithIdRequest.md)
  - [CreateLocationPostgresFirewallRuleWithIdWithIdRequest](docs/CreateLocationPostgresFirewallRuleWithIdWithIdRequest.md)
  - [CreateLocationPostgresMetricDestinationRequest](docs/CreateLocationPostgresMetricDestinationRequest.md)
@@ -179,7 +187,9 @@ Class | Method | HTTP request | Description
  - [FirewallDetailedAllOf](docs/FirewallDetailedAllOf.md)
  - [FirewallRule](docs/FirewallRule.md)
  - [GetFirewall200Response](docs/GetFirewall200Response.md)
+ - [KubernetesCluster](docs/KubernetesCluster.md)
  - [ListLoadBalancers200Response](docs/ListLoadBalancers200Response.md)
+ - [ListLocationKubernetesClusters200Response](docs/ListLocationKubernetesClusters200Response.md)
  - [ListLocationPostgresDatabases200Response](docs/ListLocationPostgresDatabases200Response.md)
  - [ListLocationPostgresFirewallRules200Response](docs/ListLocationPostgresFirewallRules200Response.md)
  - [ListLocationPrivateSubnets200Response](docs/ListLocationPrivateSubnets200Response.md)

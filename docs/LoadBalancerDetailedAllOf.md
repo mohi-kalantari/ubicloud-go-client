@@ -6,13 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Location** | **string** | Location of the Load Balancer | 
 **Subnet** | **string** | Subnet of the Load Balancer | 
-**Vms** | [**[]Vm**](Vm.md) |  | 
+**Vms** | **[]string** |  | 
 
 ## Methods
 
 ### NewLoadBalancerDetailedAllOf
 
-`func NewLoadBalancerDetailedAllOf(location string, subnet string, vms []Vm, ) *LoadBalancerDetailedAllOf`
+`func NewLoadBalancerDetailedAllOf(location string, subnet string, vms []string, ) *LoadBalancerDetailedAllOf`
 
 NewLoadBalancerDetailedAllOf instantiates a new LoadBalancerDetailedAllOf object
 This constructor will assign default values to properties that have it defined,
@@ -69,20 +69,20 @@ SetSubnet sets Subnet field to given value.
 
 ### GetVms
 
-`func (o *LoadBalancerDetailedAllOf) GetVms() []Vm`
+`func (o *LoadBalancerDetailedAllOf) GetVms() []string`
 
 GetVms returns the Vms field if non-nil, zero value otherwise.
 
 ### GetVmsOk
 
-`func (o *LoadBalancerDetailedAllOf) GetVmsOk() (*[]Vm, bool)`
+`func (o *LoadBalancerDetailedAllOf) GetVmsOk() (*[]string, bool)`
 
 GetVmsOk returns a tuple with the Vms field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetVms
 
-`func (o *LoadBalancerDetailedAllOf) SetVms(v []Vm)`
+`func (o *LoadBalancerDetailedAllOf) SetVms(v []string)`
 
 SetVms sets Vms field to given value.
 

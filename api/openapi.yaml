@@ -34,6 +34,8 @@ tags:
   name: Project
 - description: Virtual Machine Operations
   name: Virtual Machine
+- name: Kubernetes VM
+- name: Kuberentes Cluster
 paths:
   /login:
     post:
@@ -3501,6 +3503,322 @@ paths:
         in user
       tags:
       - Virtual Machine
+  /project/{project_id}/location/{location}/kubernetes-cluster:
+    get:
+      operationId: listLocationKubernetesClusters
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Pagination - Start after
+        explode: true
+        in: query
+        name: start_after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Pagination - Page size
+        explode: true
+        in: query
+        name: page_size
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      - description: Pagination - Order column
+        explode: true
+        in: query
+        name: order_column
+        required: false
+        schema:
+          default: id
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listLocationKubernetesClusters_200_response'
+          description: A list of Kubernetes clusters in a location
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: List kubernetes clusters in a specific location of a project
+      tags:
+      - Kubernetes Cluster
+  /project/{project_id}/location/{location}/kubernetes-cluster/{kubernetes_cluster_name}:
+    get:
+      operationId: getKubernetesClusterDetails
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Kubernetes cluster name
+        explode: false
+        in: path
+        name: kubernetes_cluster_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KubernetesCluster'
+          description: Details of the kubernetes Cluster
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Get details of a specific Kubernetes Cluster in a location
+      tags:
+      - Kubernetes Cluster
+    post:
+      operationId: createLocationKubernetesCluster
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Kubernetes cluster name
+        explode: false
+        in: path
+        name: kubernetes_cluster_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createLocationKubernetesCluster_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KubernetesCluster'
+          description: Kubernetes cluster created successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Create Kubernetes Cluster in a specific location of a project
+      tags:
+      - Kubernetes Cluster
+  /project/{project_id}/location/{location}/kubernetes-vm/{kubernetes_vm_name}:
+    get:
+      operationId: getKubernetesVMDetails
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Kubernetes vm name
+        explode: false
+        in: path
+        name: kubernetes_vm_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VmDetailed'
+          description: Details of the kubernetes VM
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Get details of a specific Kubernetes VM in a location
+      tags:
+      - Kubernetes VM
+    post:
+      operationId: createLocationKubernetesVM
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Kubernetes vm name
+        explode: false
+        in: path
+        name: kubernetes_vm_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createLocationKubernetesVM_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VmDetailed'
+          description: Kubernetes cluster created successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Create Kubernetes VM in a specific location of a project
+      tags:
+      - Kubernetes VM
+  /project/{project_id}/location/{location}/kubernetes-vm:
+    get:
+      operationId: listLocationKubernetesVMs
+      parameters:
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Pagination - Start after
+        explode: true
+        in: query
+        name: start_after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Pagination - Page size
+        explode: true
+        in: query
+        name: page_size
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      - description: Pagination - Order column
+        explode: true
+        in: query
+        name: order_column
+        required: false
+        schema:
+          default: id
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listLocationVMs_200_response'
+          description: A list of Kuberentes VMs
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: List Kubernetes VMs in a specific location of a project
+      tags:
+      - Kubernetes VM
 components:
   parameters:
     firewall_id:
@@ -3655,6 +3973,24 @@ components:
       explode: false
       in: path
       name: vm_name
+      required: true
+      schema:
+        type: string
+      style: simple
+    kubernetes_cluster_name:
+      description: Kubernetes cluster name
+      explode: false
+      in: path
+      name: kubernetes_cluster_name
+      required: true
+      schema:
+        type: string
+      style: simple
+    kubernetes_vm_name:
+      description: Kubernetes vm name
+      explode: false
+      in: path
+      name: kubernetes_vm_name
       required: true
       schema:
         type: string
@@ -4018,6 +4354,7 @@ components:
         name: my-vm-name
         location: eu-central-h1
         id: vmw12ouhqjdy4g72xng1ubkda6
+        ip4_enabled: true
         state: state
         ip4: ip4
         ip6: ip6
@@ -4033,6 +4370,9 @@ components:
           format: ipv4
           nullable: true
           type: string
+        ip4_enabled:
+          description: Whether IPv4 is enabled
+          type: boolean
         ip6:
           description: IPv6 address
           format: ipv6
@@ -4061,6 +4401,7 @@ components:
       required:
       - id
       - ip4
+      - ip4_enabled
       - ip6
       - location
       - name
@@ -4074,6 +4415,44 @@ components:
       allOf:
       - $ref: '#/components/schemas/Vm'
       - $ref: '#/components/schemas/VmDetailed_allOf'
+      type: object
+    KubernetesCluster:
+      additionalProperties: false
+      example:
+        subnet: subnet
+        replica: 6
+        name: name
+        kubernetes_version: kubernetes_version
+        location: eu-central-h1
+        id: kcji8uuhqjdy4g72xng1ubq23r
+      properties:
+        id:
+          description: ID of the kubernetes cluster
+          example: kcji8uuhqjdy4g72xng1ubq23r
+          type: string
+        name:
+          description: Name of the kubernetes cluster
+          type: string
+        replica:
+          description: Number of control plane replicas
+          type: integer
+        kubernetes_version:
+          description: Version of the kubernetes cluster
+          type: string
+        subnet:
+          description: Name of the kubernetes cluster's subnet
+          type: string
+        location:
+          description: Location of the kubernetes cluster
+          example: eu-central-h1
+          type: string
+      required:
+      - id
+      - kubernetes_version
+      - location
+      - name
+      - replica
+      - subnet
       type: object
     login_request:
       additionalProperties: false
@@ -4559,6 +4938,7 @@ components:
           name: my-vm-name
           location: eu-central-h1
           id: vmw12ouhqjdy4g72xng1ubkda6
+          ip4_enabled: true
           state: state
           ip4: ip4
           ip6: ip6
@@ -4568,6 +4948,7 @@ components:
           name: my-vm-name
           location: eu-central-h1
           id: vmw12ouhqjdy4g72xng1ubkda6
+          ip4_enabled: true
           state: state
           ip4: ip4
           ip6: ip6
@@ -4611,6 +4992,80 @@ components:
       required:
       - public_key
       type: object
+    listLocationKubernetesClusters_200_response:
+      additionalProperties: false
+      example:
+        count: 0
+        items:
+        - subnet: subnet
+          replica: 6
+          name: name
+          kubernetes_version: kubernetes_version
+          location: eu-central-h1
+          id: kcji8uuhqjdy4g72xng1ubq23r
+        - subnet: subnet
+          replica: 6
+          name: name
+          kubernetes_version: kubernetes_version
+          location: eu-central-h1
+          id: kcji8uuhqjdy4g72xng1ubq23r
+      properties:
+        count:
+          type: integer
+        items:
+          items:
+            $ref: '#/components/schemas/KubernetesCluster'
+          type: array
+      required:
+      - count
+      - items
+      type: object
+    createLocationKubernetesCluster_request:
+      properties:
+        subnet:
+          description: Name of subnet
+          type: string
+        kubernetes_version:
+          description: Version of the kubernetes cluster
+          type: string
+      required:
+      - kubernetes_version
+      - subnet
+      type: object
+    createLocationKubernetesVM_request:
+      properties:
+        boot_image:
+          description: Boot image of the VM
+          type: string
+        enable_ip4:
+          description: Enable IPv4
+          type: boolean
+        private_subnet_id:
+          description: ID of the private subnet
+          type: string
+        size:
+          description: Size of the VM
+          type: string
+        storage_size:
+          description: Requested storage size in GiB
+          type: integer
+        unix_user:
+          description: Unix user of the VM
+          type: string
+        commands:
+          description: List of commands for the Kubernetes VM
+          items:
+            type: string
+          type: array
+      required:
+      - boot_image
+      - commands
+      - enable_ip4
+      - private_subnet_id
+      - size
+      - storage_size
+      - unix_user
+      type: object
     Error_error:
       additionalProperties: false
       properties:
@@ -4652,7 +5107,7 @@ components:
           type: string
         vms:
           items:
-            $ref: '#/components/schemas/Vm'
+            type: string
           type: array
       required:
       - location

@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **string** | ID of the VM | 
 **Ip4** | **NullableString** | IPv4 address | 
+**Ip4Enabled** | **bool** | Whether IPv4 is enabled | 
 **Ip6** | **NullableString** | IPv6 address | 
 **Location** | **string** | Location of the VM | 
 **Name** | **string** | Name of the VM | 
@@ -22,7 +23,7 @@ Name | Type | Description | Notes
 
 ### NewVmDetailed
 
-`func NewVmDetailed(id string, ip4 NullableString, ip6 NullableString, location string, name string, size string, state string, storageSizeGib int32, unixUser string, firewalls []Firewall, privateIpv4 string, privateIpv6 string, subnet string, ) *VmDetailed`
+`func NewVmDetailed(id string, ip4 NullableString, ip4Enabled bool, ip6 NullableString, location string, name string, size string, state string, storageSizeGib int32, unixUser string, firewalls []Firewall, privateIpv4 string, privateIpv6 string, subnet string, ) *VmDetailed`
 
 NewVmDetailed instantiates a new VmDetailed object
 This constructor will assign default values to properties that have it defined,
@@ -87,6 +88,26 @@ SetIp4 sets Ip4 field to given value.
 `func (o *VmDetailed) UnsetIp4()`
 
 UnsetIp4 ensures that no value is present for Ip4, not even an explicit nil
+### GetIp4Enabled
+
+`func (o *VmDetailed) GetIp4Enabled() bool`
+
+GetIp4Enabled returns the Ip4Enabled field if non-nil, zero value otherwise.
+
+### GetIp4EnabledOk
+
+`func (o *VmDetailed) GetIp4EnabledOk() (*bool, bool)`
+
+GetIp4EnabledOk returns a tuple with the Ip4Enabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIp4Enabled
+
+`func (o *VmDetailed) SetIp4Enabled(v bool)`
+
+SetIp4Enabled sets Ip4Enabled field to given value.
+
+
 ### GetIp6
 
 `func (o *VmDetailed) GetIp6() string`

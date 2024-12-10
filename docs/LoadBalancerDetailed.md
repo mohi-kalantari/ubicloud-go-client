@@ -14,13 +14,13 @@ Name | Type | Description | Notes
 **SrcPort** | **int32** | Source port for the Load Balancer | 
 **Location** | **string** | Location of the Load Balancer | 
 **Subnet** | **string** | Subnet of the Load Balancer | 
-**Vms** | [**[]Vm**](Vm.md) |  | 
+**Vms** | **[]string** |  | 
 
 ## Methods
 
 ### NewLoadBalancerDetailed
 
-`func NewLoadBalancerDetailed(algorithm string, dstPort int32, healthCheckEndpoint string, healthCheckProtocol string, hostname string, id string, name string, srcPort int32, location string, subnet string, vms []Vm, ) *LoadBalancerDetailed`
+`func NewLoadBalancerDetailed(algorithm string, dstPort int32, healthCheckEndpoint string, healthCheckProtocol string, hostname string, id string, name string, srcPort int32, location string, subnet string, vms []string, ) *LoadBalancerDetailed`
 
 NewLoadBalancerDetailed instantiates a new LoadBalancerDetailed object
 This constructor will assign default values to properties that have it defined,
@@ -237,20 +237,20 @@ SetSubnet sets Subnet field to given value.
 
 ### GetVms
 
-`func (o *LoadBalancerDetailed) GetVms() []Vm`
+`func (o *LoadBalancerDetailed) GetVms() []string`
 
 GetVms returns the Vms field if non-nil, zero value otherwise.
 
 ### GetVmsOk
 
-`func (o *LoadBalancerDetailed) GetVmsOk() (*[]Vm, bool)`
+`func (o *LoadBalancerDetailed) GetVmsOk() (*[]string, bool)`
 
 GetVmsOk returns a tuple with the Vms field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetVms
 
-`func (o *LoadBalancerDetailed) SetVms(v []Vm)`
+`func (o *LoadBalancerDetailed) SetVms(v []string)`
 
 SetVms sets Vms field to given value.
 

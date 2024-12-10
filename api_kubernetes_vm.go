@@ -151,3 +151,263 @@ func (a *KubernetesVMApiService) CreateLocationKubernetesVMExecute(r ApiCreateLo
 
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
+
+type ApiGetKubernetesVMDetailsRequest struct {
+	ctx context.Context
+	ApiService *KubernetesVMApiService
+	projectId string
+	location string
+	kubernetesVmName string
+}
+
+func (r ApiGetKubernetesVMDetailsRequest) Execute() (*VmDetailed, *http.Response, error) {
+	return r.ApiService.GetKubernetesVMDetailsExecute(r)
+}
+
+/*
+GetKubernetesVMDetails Get details of a specific Kubernetes VM in a location
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectId ID of the project
+ @param location The Ubicloud location/region
+ @param kubernetesVmName Kubernetes vm name
+ @return ApiGetKubernetesVMDetailsRequest
+*/
+func (a *KubernetesVMApiService) GetKubernetesVMDetails(ctx context.Context, projectId string, location string, kubernetesVmName string) ApiGetKubernetesVMDetailsRequest {
+	return ApiGetKubernetesVMDetailsRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectId: projectId,
+		location: location,
+		kubernetesVmName: kubernetesVmName,
+	}
+}
+
+// Execute executes the request
+//  @return VmDetailed
+func (a *KubernetesVMApiService) GetKubernetesVMDetailsExecute(r ApiGetKubernetesVMDetailsRequest) (*VmDetailed, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *VmDetailed
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "KubernetesVMApiService.GetKubernetesVMDetails")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/project/{project_id}/location/{location}/kubernetes-vm/{kubernetes_vm_name}"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"location"+"}", url.PathEscape(parameterValueToString(r.location, "location")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"kubernetes_vm_name"+"}", url.PathEscape(parameterValueToString(r.kubernetesVmName, "kubernetesVmName")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiListLocationKubernetesVMsRequest struct {
+	ctx context.Context
+	ApiService *KubernetesVMApiService
+	location string
+	projectId string
+	startAfter *string
+	pageSize *int32
+	orderColumn *string
+}
+
+// Pagination - Start after
+func (r ApiListLocationKubernetesVMsRequest) StartAfter(startAfter string) ApiListLocationKubernetesVMsRequest {
+	r.startAfter = &startAfter
+	return r
+}
+
+// Pagination - Page size
+func (r ApiListLocationKubernetesVMsRequest) PageSize(pageSize int32) ApiListLocationKubernetesVMsRequest {
+	r.pageSize = &pageSize
+	return r
+}
+
+// Pagination - Order column
+func (r ApiListLocationKubernetesVMsRequest) OrderColumn(orderColumn string) ApiListLocationKubernetesVMsRequest {
+	r.orderColumn = &orderColumn
+	return r
+}
+
+func (r ApiListLocationKubernetesVMsRequest) Execute() (*ListLocationVMs200Response, *http.Response, error) {
+	return r.ApiService.ListLocationKubernetesVMsExecute(r)
+}
+
+/*
+ListLocationKubernetesVMs List Kubernetes VMs in a specific location of a project
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param location The Ubicloud location/region
+ @param projectId ID of the project
+ @return ApiListLocationKubernetesVMsRequest
+*/
+func (a *KubernetesVMApiService) ListLocationKubernetesVMs(ctx context.Context, location string, projectId string) ApiListLocationKubernetesVMsRequest {
+	return ApiListLocationKubernetesVMsRequest{
+		ApiService: a,
+		ctx: ctx,
+		location: location,
+		projectId: projectId,
+	}
+}
+
+// Execute executes the request
+//  @return ListLocationVMs200Response
+func (a *KubernetesVMApiService) ListLocationKubernetesVMsExecute(r ApiListLocationKubernetesVMsRequest) (*ListLocationVMs200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ListLocationVMs200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "KubernetesVMApiService.ListLocationKubernetesVMs")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/project/{project_id}/location/{location}/kubernetes-vm"
+	localVarPath = strings.Replace(localVarPath, "{"+"location"+"}", url.PathEscape(parameterValueToString(r.location, "location")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.startAfter != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "start_after", r.startAfter, "")
+	}
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page_size", r.pageSize, "")
+	}
+	if r.orderColumn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "order_column", r.orderColumn, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
