@@ -11,11 +11,10 @@ package openapi
 
 import (
 	"context"
-	"testing"
-
-	openapiclient "github.com/mohi-kalantari/ubicloud-go-client"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"testing"
+	openapiclient "github.com/mohi-kalantari/ubicloud-go-client"
 )
 
 func Test_openapi_PostgresFirewallRuleApiService(t *testing.T) {
@@ -25,7 +24,7 @@ func Test_openapi_PostgresFirewallRuleApiService(t *testing.T) {
 
 	t.Run("Test PostgresFirewallRuleApiService CreateLocationPostgresFirewallRule", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var location string
 		var postgresDatabaseName string
@@ -41,7 +40,7 @@ func Test_openapi_PostgresFirewallRuleApiService(t *testing.T) {
 
 	t.Run("Test PostgresFirewallRuleApiService CreateLocationPostgresFirewallRuleWithId", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var location string
 		var postgresDatabaseId string
@@ -57,7 +56,7 @@ func Test_openapi_PostgresFirewallRuleApiService(t *testing.T) {
 
 	t.Run("Test PostgresFirewallRuleApiService CreateLocationPostgresFirewallRuleWithIdWithId", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var location string
 		var postgresDatabaseId string
@@ -74,7 +73,7 @@ func Test_openapi_PostgresFirewallRuleApiService(t *testing.T) {
 
 	t.Run("Test PostgresFirewallRuleApiService GetLocationPostgresFirewallRuleDetailsWithId", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var location string
 		var postgresDatabaseId string
@@ -91,7 +90,7 @@ func Test_openapi_PostgresFirewallRuleApiService(t *testing.T) {
 
 	t.Run("Test PostgresFirewallRuleApiService ListLocationPostgresFirewallRules", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var location string
 		var postgresDatabaseId string

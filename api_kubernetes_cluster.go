@@ -24,6 +24,126 @@ import (
 // KubernetesClusterApiService KubernetesClusterApi service
 type KubernetesClusterApiService service
 
+type ApiCreateKubernetesClusterRequest struct {
+	ctx context.Context
+	ApiService *KubernetesClusterApiService
+	projectId string
+	createKubernetesClusterRequest *CreateKubernetesClusterRequest
+}
+
+func (r ApiCreateKubernetesClusterRequest) CreateKubernetesClusterRequest(createKubernetesClusterRequest CreateKubernetesClusterRequest) ApiCreateKubernetesClusterRequest {
+	r.createKubernetesClusterRequest = &createKubernetesClusterRequest
+	return r
+}
+
+func (r ApiCreateKubernetesClusterRequest) Execute() (*KubernetesCluster, *http.Response, error) {
+	return r.ApiService.CreateKubernetesClusterExecute(r)
+}
+
+/*
+CreateKubernetesCluster Create a new kubernetes cluster
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectId ID of the project
+ @return ApiCreateKubernetesClusterRequest
+*/
+func (a *KubernetesClusterApiService) CreateKubernetesCluster(ctx context.Context, projectId string) ApiCreateKubernetesClusterRequest {
+	return ApiCreateKubernetesClusterRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectId: projectId,
+	}
+}
+
+// Execute executes the request
+//  @return KubernetesCluster
+func (a *KubernetesClusterApiService) CreateKubernetesClusterExecute(r ApiCreateKubernetesClusterRequest) (*KubernetesCluster, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *KubernetesCluster
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "KubernetesClusterApiService.CreateKubernetesCluster")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/project/{project_id}/kubernetes-cluster"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createKubernetesClusterRequest == nil {
+		return localVarReturnValue, nil, reportError("createKubernetesClusterRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createKubernetesClusterRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreateLocationKubernetesClusterRequest struct {
 	ctx context.Context
 	ApiService *KubernetesClusterApiService
@@ -107,6 +227,115 @@ func (a *KubernetesClusterApiService) CreateLocationKubernetesClusterExecute(r A
 	}
 	// body params
 	localVarPostBody = r.createLocationKubernetesClusterRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetKubernetesClusterRequest struct {
+	ctx context.Context
+	ApiService *KubernetesClusterApiService
+	projectId string
+}
+
+func (r ApiGetKubernetesClusterRequest) Execute() (*GetKubernetesCluster200Response, *http.Response, error) {
+	return r.ApiService.GetKubernetesClusterExecute(r)
+}
+
+/*
+GetKubernetesCluster Return the list of kubernetes clusters in the project
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectId ID of the project
+ @return ApiGetKubernetesClusterRequest
+*/
+func (a *KubernetesClusterApiService) GetKubernetesCluster(ctx context.Context, projectId string) ApiGetKubernetesClusterRequest {
+	return ApiGetKubernetesClusterRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectId: projectId,
+	}
+}
+
+// Execute executes the request
+//  @return GetKubernetesCluster200Response
+func (a *KubernetesClusterApiService) GetKubernetesClusterExecute(r ApiGetKubernetesClusterRequest) (*GetKubernetesCluster200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetKubernetesCluster200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "KubernetesClusterApiService.GetKubernetesCluster")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/project/{project_id}/kubernetes-cluster"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -297,7 +526,7 @@ func (r ApiListLocationKubernetesClustersRequest) OrderColumn(orderColumn string
 	return r
 }
 
-func (r ApiListLocationKubernetesClustersRequest) Execute() (*ListLocationKubernetesClusters200Response, *http.Response, error) {
+func (r ApiListLocationKubernetesClustersRequest) Execute() (*GetKubernetesCluster200Response, *http.Response, error) {
 	return r.ApiService.ListLocationKubernetesClustersExecute(r)
 }
 
@@ -319,13 +548,13 @@ func (a *KubernetesClusterApiService) ListLocationKubernetesClusters(ctx context
 }
 
 // Execute executes the request
-//  @return ListLocationKubernetesClusters200Response
-func (a *KubernetesClusterApiService) ListLocationKubernetesClustersExecute(r ApiListLocationKubernetesClustersRequest) (*ListLocationKubernetesClusters200Response, *http.Response, error) {
+//  @return GetKubernetesCluster200Response
+func (a *KubernetesClusterApiService) ListLocationKubernetesClustersExecute(r ApiListLocationKubernetesClustersRequest) (*GetKubernetesCluster200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *ListLocationKubernetesClusters200Response
+		localVarReturnValue  *GetKubernetesCluster200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "KubernetesClusterApiService.ListLocationKubernetesClusters")

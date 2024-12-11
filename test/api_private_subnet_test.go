@@ -11,11 +11,10 @@ package openapi
 
 import (
 	"context"
-	"testing"
-
-	openapiclient "github.com/mohi-kalantari/ubicloud-go-client"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"testing"
+	openapiclient "github.com/mohi-kalantari/ubicloud-go-client"
 )
 
 func Test_openapi_PrivateSubnetApiService(t *testing.T) {
@@ -25,7 +24,7 @@ func Test_openapi_PrivateSubnetApiService(t *testing.T) {
 
 	t.Run("Test PrivateSubnetApiService CreatePrivateSubnet", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -41,7 +40,7 @@ func Test_openapi_PrivateSubnetApiService(t *testing.T) {
 
 	t.Run("Test PrivateSubnetApiService DeletePSWithId", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -56,7 +55,7 @@ func Test_openapi_PrivateSubnetApiService(t *testing.T) {
 
 	t.Run("Test PrivateSubnetApiService DeletePrivateSubnet", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -71,7 +70,7 @@ func Test_openapi_PrivateSubnetApiService(t *testing.T) {
 
 	t.Run("Test PrivateSubnetApiService GetPSDetailsWithId", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -87,7 +86,7 @@ func Test_openapi_PrivateSubnetApiService(t *testing.T) {
 
 	t.Run("Test PrivateSubnetApiService GetPrivateSubnetDetails", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -103,7 +102,7 @@ func Test_openapi_PrivateSubnetApiService(t *testing.T) {
 
 	t.Run("Test PrivateSubnetApiService ListLocationPrivateSubnets", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -118,7 +117,7 @@ func Test_openapi_PrivateSubnetApiService(t *testing.T) {
 
 	t.Run("Test PrivateSubnetApiService ListPSs", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 

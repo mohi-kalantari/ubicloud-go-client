@@ -1,7 +1,7 @@
 /*
 Clover API
 
-Testing LoginApiService
+Testing DefaultApiService
 
 */
 
@@ -17,16 +17,20 @@ import (
 	openapiclient "github.com/mohi-kalantari/ubicloud-go-client"
 )
 
-func Test_openapi_LoginApiService(t *testing.T) {
+func Test_openapi_DefaultApiService(t *testing.T) {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test LoginApiService Login", func(t *testing.T) {
+	t.Run("Test DefaultApiService CreateLocationKubernetesVM", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.LoginApi.Login(context.Background()).Execute()
+		var projectId string
+		var location string
+		var kubernetesVmName string
+
+		resp, httpRes, err := apiClient.DefaultApi.CreateLocationKubernetesVM(context.Background(), projectId, location, kubernetesVmName).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

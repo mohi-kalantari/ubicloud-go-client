@@ -35,7 +35,7 @@ tags:
 - description: Virtual Machine Operations
   name: Virtual Machine
 - name: Kubernetes VM
-- name: Kuberentes Cluster
+- name: Kubernetes Cluster
 paths:
   /login:
     post:
@@ -3503,6 +3503,67 @@ paths:
         in user
       tags:
       - Virtual Machine
+  /project/{project_id}/kubernetes-cluster:
+    get:
+      operationId: getKubernetesCluster
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getKubernetesCluster_200_response'
+          description: Kubernetes Cluster list retrieved successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Return the list of kubernetes clusters in the project
+      tags:
+      - Kubernetes Cluster
+    post:
+      operationId: createKubernetesCluster
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createKubernetesCluster_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KubernetesCluster'
+          description: Firewall created successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Create a new kubernetes cluster
+      tags:
+      - Kubernetes Cluster
   /project/{project_id}/location/{location}/kubernetes-cluster:
     get:
       operationId: listLocationKubernetesClusters
@@ -3555,7 +3616,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listLocationKubernetesClusters_200_response'
+                $ref: '#/components/schemas/getKubernetesCluster_200_response'
           description: A list of Kubernetes clusters in a location
         default:
           content:
@@ -3662,6 +3723,46 @@ paths:
       tags:
       - Kubernetes Cluster
   /project/{project_id}/location/{location}/kubernetes-vm/{kubernetes_vm_name}:
+    delete:
+      operationId: deleteKubernetesVMWithId
+      parameters:
+      - description: ID of the project
+        explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The Ubicloud location/region
+        explode: false
+        in: path
+        name: location
+        required: true
+        schema:
+          example: eu-central-h1
+          type: string
+        style: simple
+      - description: Kubernetes vm name
+        explode: false
+        in: path
+        name: kubernetes_vm_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Kubernetes VM deleted successfully
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: an error response
+      summary: Delete a specific Kubernetes VM with ID
+      tags:
+      - Kubernetes VM
     get:
       operationId: getKubernetesVMDetails
       parameters:
@@ -3754,8 +3855,6 @@ paths:
                 $ref: '#/components/schemas/Error'
           description: an error response
       summary: Create Kubernetes VM in a specific location of a project
-      tags:
-      - Kubernetes VM
   /project/{project_id}/location/{location}/kubernetes-vm:
     get:
       operationId: listLocationKubernetesVMs
@@ -3808,8 +3907,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listLocationVMs_200_response'
-          description: A list of Kuberentes VMs
+                $ref: '#/components/schemas/listLocationKubernetesVMs_200_response'
+          description: A list of Kubernetes VMs
         default:
           content:
             application/json:
@@ -4992,7 +5091,7 @@ components:
       required:
       - public_key
       type: object
-    listLocationKubernetesClusters_200_response:
+    getKubernetesCluster_200_response:
       additionalProperties: false
       example:
         count: 0
@@ -5019,6 +5118,22 @@ components:
       required:
       - count
       - items
+      type: object
+    createKubernetesCluster_request:
+      properties:
+        subnet:
+          description: Name of subnet
+          type: string
+        location:
+          description: Location of the kubernetes cluster
+          type: string
+        kubernetes_version:
+          description: Version of the kubernetes cluster
+          type: string
+      required:
+      - kubernetes_version
+      - location
+      - subnet
       type: object
     createLocationKubernetesCluster_request:
       properties:
@@ -5065,6 +5180,24 @@ components:
       - size
       - storage_size
       - unix_user
+      type: object
+    listLocationKubernetesVMs_200_response:
+      additionalProperties: false
+      example:
+        count: 0
+        items:
+        - null
+        - null
+      properties:
+        count:
+          type: integer
+        items:
+          items:
+            $ref: '#/components/schemas/VmDetailed'
+          type: array
+      required:
+      - count
+      - items
       type: object
     Error_error:
       additionalProperties: false

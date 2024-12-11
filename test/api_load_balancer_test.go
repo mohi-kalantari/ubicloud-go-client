@@ -11,11 +11,10 @@ package openapi
 
 import (
 	"context"
-	"testing"
-
-	openapiclient "github.com/mohi-kalantari/ubicloud-go-client"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"testing"
+	openapiclient "github.com/mohi-kalantari/ubicloud-go-client"
 )
 
 func Test_openapi_LoadBalancerApiService(t *testing.T) {
@@ -25,7 +24,7 @@ func Test_openapi_LoadBalancerApiService(t *testing.T) {
 
 	t.Run("Test LoadBalancerApiService AttachVmLocationLoadBalancer", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -41,7 +40,7 @@ func Test_openapi_LoadBalancerApiService(t *testing.T) {
 
 	t.Run("Test LoadBalancerApiService CreateLoadBalancer", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var loadBalancerName string
@@ -56,7 +55,7 @@ func Test_openapi_LoadBalancerApiService(t *testing.T) {
 
 	t.Run("Test LoadBalancerApiService CreateLocationLoadBalancer", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -72,7 +71,7 @@ func Test_openapi_LoadBalancerApiService(t *testing.T) {
 
 	t.Run("Test LoadBalancerApiService DeleteLoadBalancer", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -87,7 +86,7 @@ func Test_openapi_LoadBalancerApiService(t *testing.T) {
 
 	t.Run("Test LoadBalancerApiService DeleteLoadBalancerWithID", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -102,7 +101,7 @@ func Test_openapi_LoadBalancerApiService(t *testing.T) {
 
 	t.Run("Test LoadBalancerApiService DetachVmLocationLoadBalancer", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -118,7 +117,7 @@ func Test_openapi_LoadBalancerApiService(t *testing.T) {
 
 	t.Run("Test LoadBalancerApiService GetLoadBalancer", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var loadBalancerName string
@@ -133,7 +132,7 @@ func Test_openapi_LoadBalancerApiService(t *testing.T) {
 
 	t.Run("Test LoadBalancerApiService GetLoadBalancerDetails", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -149,7 +148,7 @@ func Test_openapi_LoadBalancerApiService(t *testing.T) {
 
 	t.Run("Test LoadBalancerApiService GetLoadBalancerDetailsWithId", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -165,7 +164,7 @@ func Test_openapi_LoadBalancerApiService(t *testing.T) {
 
 	t.Run("Test LoadBalancerApiService ListLoadBalancers", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 
@@ -179,7 +178,7 @@ func Test_openapi_LoadBalancerApiService(t *testing.T) {
 
 	t.Run("Test LoadBalancerApiService ListLocationLoadBalancers", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -194,7 +193,7 @@ func Test_openapi_LoadBalancerApiService(t *testing.T) {
 
 	t.Run("Test LoadBalancerApiService PatchLocationLoadBalancer", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string

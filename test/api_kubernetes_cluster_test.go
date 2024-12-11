@@ -11,11 +11,10 @@ package openapi
 
 import (
 	"context"
-	"testing"
-
-	openapiclient "github.com/mohi-kalantari/ubicloud-go-client"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"testing"
+	openapiclient "github.com/mohi-kalantari/ubicloud-go-client"
 )
 
 func Test_openapi_KubernetesClusterApiService(t *testing.T) {
@@ -25,7 +24,7 @@ func Test_openapi_KubernetesClusterApiService(t *testing.T) {
 
 	t.Run("Test KubernetesClusterApiService CreateLocationKubernetesCluster", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -41,7 +40,7 @@ func Test_openapi_KubernetesClusterApiService(t *testing.T) {
 
 	t.Run("Test KubernetesClusterApiService ListLocationKubernetesClusters", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string

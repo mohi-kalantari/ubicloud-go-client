@@ -11,11 +11,10 @@ package openapi
 
 import (
 	"context"
-	"testing"
-
-	openapiclient "github.com/mohi-kalantari/ubicloud-go-client"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"testing"
+	openapiclient "github.com/mohi-kalantari/ubicloud-go-client"
 )
 
 func Test_openapi_FirewallRuleApiService(t *testing.T) {
@@ -25,7 +24,7 @@ func Test_openapi_FirewallRuleApiService(t *testing.T) {
 
 	t.Run("Test FirewallRuleApiService CreateFirewallRule", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var firewallName string
@@ -40,7 +39,7 @@ func Test_openapi_FirewallRuleApiService(t *testing.T) {
 
 	t.Run("Test FirewallRuleApiService CreateLocationFirewallFirewallRule", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var location string
 		var projectId string
@@ -57,7 +56,7 @@ func Test_openapi_FirewallRuleApiService(t *testing.T) {
 
 	t.Run("Test FirewallRuleApiService CreateLocationFirewallFirewallRuleWithId", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var location string
 		var projectId string
@@ -74,7 +73,7 @@ func Test_openapi_FirewallRuleApiService(t *testing.T) {
 
 	t.Run("Test FirewallRuleApiService CreateLocationFirewallRule", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var firewallName string
 		var location string
@@ -90,7 +89,7 @@ func Test_openapi_FirewallRuleApiService(t *testing.T) {
 
 	t.Run("Test FirewallRuleApiService CreateLocationFirewallRuleWithId", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var firewallName string
 		var location string
@@ -106,7 +105,7 @@ func Test_openapi_FirewallRuleApiService(t *testing.T) {
 
 	t.Run("Test FirewallRuleApiService DeleteFirewallRule", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var firewallName string
@@ -121,7 +120,7 @@ func Test_openapi_FirewallRuleApiService(t *testing.T) {
 
 	t.Run("Test FirewallRuleApiService DeleteLocationFirewallFirewallRule", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var location string
 		var projectId string
@@ -137,7 +136,7 @@ func Test_openapi_FirewallRuleApiService(t *testing.T) {
 
 	t.Run("Test FirewallRuleApiService DeleteLocationFirewallFirewallRuleWithId", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var location string
 		var projectId string
@@ -153,7 +152,7 @@ func Test_openapi_FirewallRuleApiService(t *testing.T) {
 
 	t.Run("Test FirewallRuleApiService DeleteLocationPostgresFirewallRule", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -169,7 +168,7 @@ func Test_openapi_FirewallRuleApiService(t *testing.T) {
 
 	t.Run("Test FirewallRuleApiService DeleteLocationPostgresFirewallRuleWithId", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var location string
 		var postgresDatabaseId string
@@ -185,7 +184,7 @@ func Test_openapi_FirewallRuleApiService(t *testing.T) {
 
 	t.Run("Test FirewallRuleApiService GetFirewallRuleDetails", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var firewallName string
@@ -201,7 +200,7 @@ func Test_openapi_FirewallRuleApiService(t *testing.T) {
 
 	t.Run("Test FirewallRuleApiService GetLocationFirewallFirewallRuleDetails", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var location string
 		var projectId string
@@ -218,7 +217,7 @@ func Test_openapi_FirewallRuleApiService(t *testing.T) {
 
 	t.Run("Test FirewallRuleApiService GetLocationFirewallFirewallRuleDetailsWithId", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var location string
 		var projectId string

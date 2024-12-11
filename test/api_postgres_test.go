@@ -11,11 +11,10 @@ package openapi
 
 import (
 	"context"
-	"testing"
-
-	openapiclient "github.com/mohi-kalantari/ubicloud-go-client"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"testing"
+	openapiclient "github.com/mohi-kalantari/ubicloud-go-client"
 )
 
 func Test_openapi_PostgresApiService(t *testing.T) {
@@ -25,7 +24,7 @@ func Test_openapi_PostgresApiService(t *testing.T) {
 
 	t.Run("Test PostgresApiService CreatePostgresDatabase", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -41,7 +40,7 @@ func Test_openapi_PostgresApiService(t *testing.T) {
 
 	t.Run("Test PostgresApiService DeletePostgresDatabase", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -56,7 +55,7 @@ func Test_openapi_PostgresApiService(t *testing.T) {
 
 	t.Run("Test PostgresApiService DeletePostgresDatabaseWithID", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -71,7 +70,7 @@ func Test_openapi_PostgresApiService(t *testing.T) {
 
 	t.Run("Test PostgresApiService FailoverPostgresDatabaseWithID", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -87,7 +86,7 @@ func Test_openapi_PostgresApiService(t *testing.T) {
 
 	t.Run("Test PostgresApiService GetPostgresDatabaseDetails", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -103,7 +102,7 @@ func Test_openapi_PostgresApiService(t *testing.T) {
 
 	t.Run("Test PostgresApiService GetPostgresDetailsWithId", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -119,7 +118,7 @@ func Test_openapi_PostgresApiService(t *testing.T) {
 
 	t.Run("Test PostgresApiService ListLocationPostgresDatabases", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -134,7 +133,7 @@ func Test_openapi_PostgresApiService(t *testing.T) {
 
 	t.Run("Test PostgresApiService ListPostgresDatabases", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 
@@ -148,7 +147,7 @@ func Test_openapi_PostgresApiService(t *testing.T) {
 
 	t.Run("Test PostgresApiService ResetSuperuserPassword", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -164,7 +163,7 @@ func Test_openapi_PostgresApiService(t *testing.T) {
 
 	t.Run("Test PostgresApiService ResetSuperuserPasswordWithID", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -180,7 +179,7 @@ func Test_openapi_PostgresApiService(t *testing.T) {
 
 	t.Run("Test PostgresApiService RestorePostgresDatabase", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string
@@ -196,7 +195,7 @@ func Test_openapi_PostgresApiService(t *testing.T) {
 
 	t.Run("Test PostgresApiService RestorePostgresDatabaseWithID", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 		var location string

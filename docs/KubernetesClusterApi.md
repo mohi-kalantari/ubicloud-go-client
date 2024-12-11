@@ -4,10 +4,82 @@ All URIs are relative to *https://api.ubicloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**CreateKubernetesCluster**](KubernetesClusterApi.md#CreateKubernetesCluster) | **Post** /project/{project_id}/kubernetes-cluster | Create a new kubernetes cluster
 [**CreateLocationKubernetesCluster**](KubernetesClusterApi.md#CreateLocationKubernetesCluster) | **Post** /project/{project_id}/location/{location}/kubernetes-cluster/{kubernetes_cluster_name} | Create Kubernetes Cluster in a specific location of a project
+[**GetKubernetesCluster**](KubernetesClusterApi.md#GetKubernetesCluster) | **Get** /project/{project_id}/kubernetes-cluster | Return the list of kubernetes clusters in the project
 [**GetKubernetesClusterDetails**](KubernetesClusterApi.md#GetKubernetesClusterDetails) | **Get** /project/{project_id}/location/{location}/kubernetes-cluster/{kubernetes_cluster_name} | Get details of a specific Kubernetes Cluster in a location
 [**ListLocationKubernetesClusters**](KubernetesClusterApi.md#ListLocationKubernetesClusters) | **Get** /project/{project_id}/location/{location}/kubernetes-cluster | List kubernetes clusters in a specific location of a project
 
+
+
+## CreateKubernetesCluster
+
+> KubernetesCluster CreateKubernetesCluster(ctx, projectId).CreateKubernetesClusterRequest(createKubernetesClusterRequest).Execute()
+
+Create a new kubernetes cluster
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/mohi-kalantari/ubicloud-go-client"
+)
+
+func main() {
+    projectId := "projectId_example" // string | ID of the project
+    createKubernetesClusterRequest := *openapiclient.NewCreateKubernetesClusterRequest("Subnet_example", "Location_example", "KubernetesVersion_example") // CreateKubernetesClusterRequest | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.KubernetesClusterApi.CreateKubernetesCluster(context.Background(), projectId).CreateKubernetesClusterRequest(createKubernetesClusterRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `KubernetesClusterApi.CreateKubernetesCluster``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `CreateKubernetesCluster`: KubernetesCluster
+    fmt.Fprintf(os.Stdout, "Response from `KubernetesClusterApi.CreateKubernetesCluster`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**projectId** | **string** | ID of the project | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateKubernetesClusterRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **createKubernetesClusterRequest** | [**CreateKubernetesClusterRequest**](CreateKubernetesClusterRequest.md) |  | 
+
+### Return type
+
+[**KubernetesCluster**](KubernetesCluster.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CreateLocationKubernetesCluster
@@ -79,6 +151,74 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetKubernetesCluster
+
+> GetKubernetesCluster200Response GetKubernetesCluster(ctx, projectId).Execute()
+
+Return the list of kubernetes clusters in the project
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/mohi-kalantari/ubicloud-go-client"
+)
+
+func main() {
+    projectId := "projectId_example" // string | ID of the project
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.KubernetesClusterApi.GetKubernetesCluster(context.Background(), projectId).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `KubernetesClusterApi.GetKubernetesCluster``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetKubernetesCluster`: GetKubernetesCluster200Response
+    fmt.Fprintf(os.Stdout, "Response from `KubernetesClusterApi.GetKubernetesCluster`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**projectId** | **string** | ID of the project | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetKubernetesClusterRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**GetKubernetesCluster200Response**](GetKubernetesCluster200Response.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -162,7 +302,7 @@ Name | Type | Description  | Notes
 
 ## ListLocationKubernetesClusters
 
-> ListLocationKubernetesClusters200Response ListLocationKubernetesClusters(ctx, projectId, location).StartAfter(startAfter).PageSize(pageSize).OrderColumn(orderColumn).Execute()
+> GetKubernetesCluster200Response ListLocationKubernetesClusters(ctx, projectId, location).StartAfter(startAfter).PageSize(pageSize).OrderColumn(orderColumn).Execute()
 
 List kubernetes clusters in a specific location of a project
 
@@ -192,7 +332,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `KubernetesClusterApi.ListLocationKubernetesClusters``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `ListLocationKubernetesClusters`: ListLocationKubernetesClusters200Response
+    // response from `ListLocationKubernetesClusters`: GetKubernetesCluster200Response
     fmt.Fprintf(os.Stdout, "Response from `KubernetesClusterApi.ListLocationKubernetesClusters`: %v\n", resp)
 }
 ```
@@ -221,7 +361,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListLocationKubernetesClusters200Response**](ListLocationKubernetesClusters200Response.md)
+[**GetKubernetesCluster200Response**](GetKubernetesCluster200Response.md)
 
 ### Authorization
 

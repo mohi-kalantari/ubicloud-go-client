@@ -4,17 +4,17 @@ All URIs are relative to *https://api.ubicloud.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CreateLocationKubernetesVM**](KubernetesVMApi.md#CreateLocationKubernetesVM) | **Post** /project/{project_id}/location/{location}/kubernetes-vm/{kubernetes_vm_name} | Create Kubernetes VM in a specific location of a project
+[**DeleteKubernetesVMWithId**](KubernetesVMApi.md#DeleteKubernetesVMWithId) | **Delete** /project/{project_id}/location/{location}/kubernetes-vm/{kubernetes_vm_name} | Delete a specific Kubernetes VM with ID
 [**GetKubernetesVMDetails**](KubernetesVMApi.md#GetKubernetesVMDetails) | **Get** /project/{project_id}/location/{location}/kubernetes-vm/{kubernetes_vm_name} | Get details of a specific Kubernetes VM in a location
 [**ListLocationKubernetesVMs**](KubernetesVMApi.md#ListLocationKubernetesVMs) | **Get** /project/{project_id}/location/{location}/kubernetes-vm | List Kubernetes VMs in a specific location of a project
 
 
 
-## CreateLocationKubernetesVM
+## DeleteKubernetesVMWithId
 
-> VmDetailed CreateLocationKubernetesVM(ctx, projectId, location, kubernetesVmName).CreateLocationKubernetesVMRequest(createLocationKubernetesVMRequest).Execute()
+> DeleteKubernetesVMWithId(ctx, projectId, location, kubernetesVmName).Execute()
 
-Create Kubernetes VM in a specific location of a project
+Delete a specific Kubernetes VM with ID
 
 ### Example
 
@@ -32,17 +32,14 @@ func main() {
     projectId := "projectId_example" // string | ID of the project
     location := "eu-central-h1" // string | The Ubicloud location/region
     kubernetesVmName := "kubernetesVmName_example" // string | Kubernetes vm name
-    createLocationKubernetesVMRequest := *openapiclient.NewCreateLocationKubernetesVMRequest("BootImage_example", false, "PrivateSubnetId_example", "Size_example", int32(123), "UnixUser_example", []string{"Commands_example"}) // CreateLocationKubernetesVMRequest | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.KubernetesVMApi.CreateLocationKubernetesVM(context.Background(), projectId, location, kubernetesVmName).CreateLocationKubernetesVMRequest(createLocationKubernetesVMRequest).Execute()
+    r, err := apiClient.KubernetesVMApi.DeleteKubernetesVMWithId(context.Background(), projectId, location, kubernetesVmName).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `KubernetesVMApi.CreateLocationKubernetesVM``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `KubernetesVMApi.DeleteKubernetesVMWithId``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `CreateLocationKubernetesVM`: VmDetailed
-    fmt.Fprintf(os.Stdout, "Response from `KubernetesVMApi.CreateLocationKubernetesVM`: %v\n", resp)
 }
 ```
 
@@ -58,7 +55,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiCreateLocationKubernetesVMRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiDeleteKubernetesVMWithIdRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -66,11 +63,10 @@ Name | Type | Description  | Notes
 
 
 
- **createLocationKubernetesVMRequest** | [**CreateLocationKubernetesVMRequest**](CreateLocationKubernetesVMRequest.md) |  | 
 
 ### Return type
 
-[**VmDetailed**](VmDetailed.md)
+ (empty response body)
 
 ### Authorization
 
@@ -78,7 +74,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -162,7 +158,7 @@ Name | Type | Description  | Notes
 
 ## ListLocationKubernetesVMs
 
-> ListLocationVMs200Response ListLocationKubernetesVMs(ctx, location, projectId).StartAfter(startAfter).PageSize(pageSize).OrderColumn(orderColumn).Execute()
+> ListLocationKubernetesVMs200Response ListLocationKubernetesVMs(ctx, location, projectId).StartAfter(startAfter).PageSize(pageSize).OrderColumn(orderColumn).Execute()
 
 List Kubernetes VMs in a specific location of a project
 
@@ -192,7 +188,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `KubernetesVMApi.ListLocationKubernetesVMs``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `ListLocationKubernetesVMs`: ListLocationVMs200Response
+    // response from `ListLocationKubernetesVMs`: ListLocationKubernetesVMs200Response
     fmt.Fprintf(os.Stdout, "Response from `KubernetesVMApi.ListLocationKubernetesVMs`: %v\n", resp)
 }
 ```
@@ -221,7 +217,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListLocationVMs200Response**](ListLocationVMs200Response.md)
+[**ListLocationKubernetesVMs200Response**](ListLocationKubernetesVMs200Response.md)
 
 ### Authorization
 

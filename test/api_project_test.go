@@ -11,11 +11,10 @@ package openapi
 
 import (
 	"context"
-	"testing"
-
-	openapiclient "github.com/mohi-kalantari/ubicloud-go-client"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"testing"
+	openapiclient "github.com/mohi-kalantari/ubicloud-go-client"
 )
 
 func Test_openapi_ProjectApiService(t *testing.T) {
@@ -25,7 +24,7 @@ func Test_openapi_ProjectApiService(t *testing.T) {
 
 	t.Run("Test ProjectApiService CreateProject", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.ProjectApi.CreateProject(context.Background()).Execute()
 
@@ -37,7 +36,7 @@ func Test_openapi_ProjectApiService(t *testing.T) {
 
 	t.Run("Test ProjectApiService DeleteProject", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 
@@ -50,7 +49,7 @@ func Test_openapi_ProjectApiService(t *testing.T) {
 
 	t.Run("Test ProjectApiService GetProject", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var projectId string
 
@@ -64,7 +63,7 @@ func Test_openapi_ProjectApiService(t *testing.T) {
 
 	t.Run("Test ProjectApiService ListProjects", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.ProjectApi.ListProjects(context.Background()).Execute()
 

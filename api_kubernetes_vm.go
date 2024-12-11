@@ -24,35 +24,29 @@ import (
 // KubernetesVMApiService KubernetesVMApi service
 type KubernetesVMApiService service
 
-type ApiCreateLocationKubernetesVMRequest struct {
+type ApiDeleteKubernetesVMWithIdRequest struct {
 	ctx context.Context
 	ApiService *KubernetesVMApiService
 	projectId string
 	location string
 	kubernetesVmName string
-	createLocationKubernetesVMRequest *CreateLocationKubernetesVMRequest
 }
 
-func (r ApiCreateLocationKubernetesVMRequest) CreateLocationKubernetesVMRequest(createLocationKubernetesVMRequest CreateLocationKubernetesVMRequest) ApiCreateLocationKubernetesVMRequest {
-	r.createLocationKubernetesVMRequest = &createLocationKubernetesVMRequest
-	return r
-}
-
-func (r ApiCreateLocationKubernetesVMRequest) Execute() (*VmDetailed, *http.Response, error) {
-	return r.ApiService.CreateLocationKubernetesVMExecute(r)
+func (r ApiDeleteKubernetesVMWithIdRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteKubernetesVMWithIdExecute(r)
 }
 
 /*
-CreateLocationKubernetesVM Create Kubernetes VM in a specific location of a project
+DeleteKubernetesVMWithId Delete a specific Kubernetes VM with ID
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param projectId ID of the project
  @param location The Ubicloud location/region
  @param kubernetesVmName Kubernetes vm name
- @return ApiCreateLocationKubernetesVMRequest
+ @return ApiDeleteKubernetesVMWithIdRequest
 */
-func (a *KubernetesVMApiService) CreateLocationKubernetesVM(ctx context.Context, projectId string, location string, kubernetesVmName string) ApiCreateLocationKubernetesVMRequest {
-	return ApiCreateLocationKubernetesVMRequest{
+func (a *KubernetesVMApiService) DeleteKubernetesVMWithId(ctx context.Context, projectId string, location string, kubernetesVmName string) ApiDeleteKubernetesVMWithIdRequest {
+	return ApiDeleteKubernetesVMWithIdRequest{
 		ApiService: a,
 		ctx: ctx,
 		projectId: projectId,
@@ -62,18 +56,16 @@ func (a *KubernetesVMApiService) CreateLocationKubernetesVM(ctx context.Context,
 }
 
 // Execute executes the request
-//  @return VmDetailed
-func (a *KubernetesVMApiService) CreateLocationKubernetesVMExecute(r ApiCreateLocationKubernetesVMRequest) (*VmDetailed, *http.Response, error) {
+func (a *KubernetesVMApiService) DeleteKubernetesVMWithIdExecute(r ApiDeleteKubernetesVMWithIdRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
+		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *VmDetailed
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "KubernetesVMApiService.CreateLocationKubernetesVM")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "KubernetesVMApiService.DeleteKubernetesVMWithId")
 	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/project/{project_id}/location/{location}/kubernetes-vm/{kubernetes_vm_name}"
@@ -84,12 +76,9 @@ func (a *KubernetesVMApiService) CreateLocationKubernetesVMExecute(r ApiCreateLo
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.createLocationKubernetesVMRequest == nil {
-		return localVarReturnValue, nil, reportError("createLocationKubernetesVMRequest is required and must be specified")
-	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
+	localVarHTTPContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -105,23 +94,21 @@ func (a *KubernetesVMApiService) CreateLocationKubernetesVMExecute(r ApiCreateLo
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	// body params
-	localVarPostBody = r.createLocationKubernetesVMRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return localVarReturnValue, nil, err
+		return nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
+		return localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
+		return localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -133,23 +120,14 @@ func (a *KubernetesVMApiService) CreateLocationKubernetesVMExecute(r ApiCreateLo
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
+				return localVarHTTPResponse, newErr
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
+		return localVarHTTPResponse, newErr
 	}
 
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
+	return localVarHTTPResponse, nil
 }
 
 type ApiGetKubernetesVMDetailsRequest struct {
@@ -297,7 +275,7 @@ func (r ApiListLocationKubernetesVMsRequest) OrderColumn(orderColumn string) Api
 	return r
 }
 
-func (r ApiListLocationKubernetesVMsRequest) Execute() (*ListLocationVMs200Response, *http.Response, error) {
+func (r ApiListLocationKubernetesVMsRequest) Execute() (*ListLocationKubernetesVMs200Response, *http.Response, error) {
 	return r.ApiService.ListLocationKubernetesVMsExecute(r)
 }
 
@@ -319,13 +297,13 @@ func (a *KubernetesVMApiService) ListLocationKubernetesVMs(ctx context.Context, 
 }
 
 // Execute executes the request
-//  @return ListLocationVMs200Response
-func (a *KubernetesVMApiService) ListLocationKubernetesVMsExecute(r ApiListLocationKubernetesVMsRequest) (*ListLocationVMs200Response, *http.Response, error) {
+//  @return ListLocationKubernetesVMs200Response
+func (a *KubernetesVMApiService) ListLocationKubernetesVMsExecute(r ApiListLocationKubernetesVMsRequest) (*ListLocationKubernetesVMs200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *ListLocationVMs200Response
+		localVarReturnValue  *ListLocationKubernetesVMs200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "KubernetesVMApiService.ListLocationKubernetesVMs")

@@ -50,6 +50,8 @@ type APIClient struct {
 
 	// API Services
 
+	DefaultApi *DefaultApiService
+
 	FirewallApi *FirewallApiService
 
 	FirewallRuleApi *FirewallRuleApiService
@@ -91,6 +93,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.common.client = c
 
 	// API Services
+	c.DefaultApi = (*DefaultApiService)(&c.common)
 	c.FirewallApi = (*FirewallApiService)(&c.common)
 	c.FirewallRuleApi = (*FirewallRuleApiService)(&c.common)
 	c.KubernetesClusterApi = (*KubernetesClusterApiService)(&c.common)
