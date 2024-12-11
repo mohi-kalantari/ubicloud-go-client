@@ -152,7 +152,7 @@ func (a *KubernetesVMApiService) CreateLocationKubernetesVMExecute(r ApiCreateLo
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiDeleteKubernetesVMWithNameRequest struct {
+type ApiDeleteLocationKubernetesVMWithNameRequest struct {
 	ctx context.Context
 	ApiService *KubernetesVMApiService
 	projectId string
@@ -160,21 +160,21 @@ type ApiDeleteKubernetesVMWithNameRequest struct {
 	kubernetesVmName string
 }
 
-func (r ApiDeleteKubernetesVMWithNameRequest) Execute() (*http.Response, error) {
-	return r.ApiService.DeleteKubernetesVMWithNameExecute(r)
+func (r ApiDeleteLocationKubernetesVMWithNameRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteLocationKubernetesVMWithNameExecute(r)
 }
 
 /*
-DeleteKubernetesVMWithName Delete a specific Kubernetes VM with name
+DeleteLocationKubernetesVMWithName Delete a specific Kubernetes VM with name
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param projectId ID of the project
  @param location The Ubicloud location/region
  @param kubernetesVmName Kubernetes vm name
- @return ApiDeleteKubernetesVMWithNameRequest
+ @return ApiDeleteLocationKubernetesVMWithNameRequest
 */
-func (a *KubernetesVMApiService) DeleteKubernetesVMWithName(ctx context.Context, projectId string, location string, kubernetesVmName string) ApiDeleteKubernetesVMWithNameRequest {
-	return ApiDeleteKubernetesVMWithNameRequest{
+func (a *KubernetesVMApiService) DeleteLocationKubernetesVMWithName(ctx context.Context, projectId string, location string, kubernetesVmName string) ApiDeleteLocationKubernetesVMWithNameRequest {
+	return ApiDeleteLocationKubernetesVMWithNameRequest{
 		ApiService: a,
 		ctx: ctx,
 		projectId: projectId,
@@ -184,14 +184,14 @@ func (a *KubernetesVMApiService) DeleteKubernetesVMWithName(ctx context.Context,
 }
 
 // Execute executes the request
-func (a *KubernetesVMApiService) DeleteKubernetesVMWithNameExecute(r ApiDeleteKubernetesVMWithNameRequest) (*http.Response, error) {
+func (a *KubernetesVMApiService) DeleteLocationKubernetesVMWithNameExecute(r ApiDeleteLocationKubernetesVMWithNameRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "KubernetesVMApiService.DeleteKubernetesVMWithName")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "KubernetesVMApiService.DeleteLocationKubernetesVMWithName")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -258,7 +258,7 @@ func (a *KubernetesVMApiService) DeleteKubernetesVMWithNameExecute(r ApiDeleteKu
 	return localVarHTTPResponse, nil
 }
 
-type ApiGetKubernetesVMDetailsRequest struct {
+type ApiGetLocationKubernetesVMDetailsRequest struct {
 	ctx context.Context
 	ApiService *KubernetesVMApiService
 	projectId string
@@ -266,21 +266,21 @@ type ApiGetKubernetesVMDetailsRequest struct {
 	kubernetesVmName string
 }
 
-func (r ApiGetKubernetesVMDetailsRequest) Execute() (*VmDetailed, *http.Response, error) {
-	return r.ApiService.GetKubernetesVMDetailsExecute(r)
+func (r ApiGetLocationKubernetesVMDetailsRequest) Execute() (*VmDetailed, *http.Response, error) {
+	return r.ApiService.GetLocationKubernetesVMDetailsExecute(r)
 }
 
 /*
-GetKubernetesVMDetails Get details of a specific Kubernetes VM in a location
+GetLocationKubernetesVMDetails Get details of a specific Kubernetes VM in a location
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param projectId ID of the project
  @param location The Ubicloud location/region
  @param kubernetesVmName Kubernetes vm name
- @return ApiGetKubernetesVMDetailsRequest
+ @return ApiGetLocationKubernetesVMDetailsRequest
 */
-func (a *KubernetesVMApiService) GetKubernetesVMDetails(ctx context.Context, projectId string, location string, kubernetesVmName string) ApiGetKubernetesVMDetailsRequest {
-	return ApiGetKubernetesVMDetailsRequest{
+func (a *KubernetesVMApiService) GetLocationKubernetesVMDetails(ctx context.Context, projectId string, location string, kubernetesVmName string) ApiGetLocationKubernetesVMDetailsRequest {
+	return ApiGetLocationKubernetesVMDetailsRequest{
 		ApiService: a,
 		ctx: ctx,
 		projectId: projectId,
@@ -291,7 +291,7 @@ func (a *KubernetesVMApiService) GetKubernetesVMDetails(ctx context.Context, pro
 
 // Execute executes the request
 //  @return VmDetailed
-func (a *KubernetesVMApiService) GetKubernetesVMDetailsExecute(r ApiGetKubernetesVMDetailsRequest) (*VmDetailed, *http.Response, error) {
+func (a *KubernetesVMApiService) GetLocationKubernetesVMDetailsExecute(r ApiGetLocationKubernetesVMDetailsRequest) (*VmDetailed, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -299,7 +299,7 @@ func (a *KubernetesVMApiService) GetKubernetesVMDetailsExecute(r ApiGetKubernete
 		localVarReturnValue  *VmDetailed
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "KubernetesVMApiService.GetKubernetesVMDetails")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "KubernetesVMApiService.GetLocationKubernetesVMDetails")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

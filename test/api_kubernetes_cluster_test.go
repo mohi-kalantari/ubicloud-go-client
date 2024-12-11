@@ -22,6 +22,20 @@ func Test_openapi_KubernetesClusterApiService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
+	t.Run("Test KubernetesClusterApiService CreateKubernetesCluster", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var projectId string
+
+		resp, httpRes, err := apiClient.KubernetesClusterApi.CreateKubernetesCluster(context.Background(), projectId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test KubernetesClusterApiService CreateLocationKubernetesCluster", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -31,6 +45,36 @@ func Test_openapi_KubernetesClusterApiService(t *testing.T) {
 		var kubernetesClusterName string
 
 		resp, httpRes, err := apiClient.KubernetesClusterApi.CreateLocationKubernetesCluster(context.Background(), projectId, location, kubernetesClusterName).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test KubernetesClusterApiService GetKubernetesCluster", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var projectId string
+
+		resp, httpRes, err := apiClient.KubernetesClusterApi.GetKubernetesCluster(context.Background(), projectId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test KubernetesClusterApiService GetKubernetesClusterDetails", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var projectId string
+		var location string
+		var kubernetesClusterName string
+
+		resp, httpRes, err := apiClient.KubernetesClusterApi.GetKubernetesClusterDetails(context.Background(), projectId, location, kubernetesClusterName).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

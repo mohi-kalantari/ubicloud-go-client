@@ -5,8 +5,8 @@ All URIs are relative to *https://api.ubicloud.com*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateLocationKubernetesVM**](KubernetesVMApi.md#CreateLocationKubernetesVM) | **Post** /project/{project_id}/location/{location}/kubernetes-vm/{kubernetes_vm_name} | Create Kubernetes VM in a specific location of a project
-[**DeleteKubernetesVMWithName**](KubernetesVMApi.md#DeleteKubernetesVMWithName) | **Delete** /project/{project_id}/location/{location}/kubernetes-vm/{kubernetes_vm_name} | Delete a specific Kubernetes VM with name
-[**GetKubernetesVMDetails**](KubernetesVMApi.md#GetKubernetesVMDetails) | **Get** /project/{project_id}/location/{location}/kubernetes-vm/{kubernetes_vm_name} | Get details of a specific Kubernetes VM in a location
+[**DeleteLocationKubernetesVMWithName**](KubernetesVMApi.md#DeleteLocationKubernetesVMWithName) | **Delete** /project/{project_id}/location/{location}/kubernetes-vm/{kubernetes_vm_name} | Delete a specific Kubernetes VM with name
+[**GetLocationKubernetesVMDetails**](KubernetesVMApi.md#GetLocationKubernetesVMDetails) | **Get** /project/{project_id}/location/{location}/kubernetes-vm/{kubernetes_vm_name} | Get details of a specific Kubernetes VM in a location
 [**ListLocationKubernetesVMs**](KubernetesVMApi.md#ListLocationKubernetesVMs) | **Get** /project/{project_id}/location/{location}/kubernetes-vm | List Kubernetes VMs in a specific location of a project
 
 
@@ -87,9 +87,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## DeleteKubernetesVMWithName
+## DeleteLocationKubernetesVMWithName
 
-> DeleteKubernetesVMWithName(ctx, projectId, location, kubernetesVmName).Execute()
+> DeleteLocationKubernetesVMWithName(ctx, projectId, location, kubernetesVmName).Execute()
 
 Delete a specific Kubernetes VM with name
 
@@ -112,9 +112,9 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.KubernetesVMApi.DeleteKubernetesVMWithName(context.Background(), projectId, location, kubernetesVmName).Execute()
+    r, err := apiClient.KubernetesVMApi.DeleteLocationKubernetesVMWithName(context.Background(), projectId, location, kubernetesVmName).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `KubernetesVMApi.DeleteKubernetesVMWithName``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `KubernetesVMApi.DeleteLocationKubernetesVMWithName``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -132,7 +132,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiDeleteKubernetesVMWithNameRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiDeleteLocationKubernetesVMWithNameRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -159,9 +159,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetKubernetesVMDetails
+## GetLocationKubernetesVMDetails
 
-> VmDetailed GetKubernetesVMDetails(ctx, projectId, location, kubernetesVmName).Execute()
+> VmDetailed GetLocationKubernetesVMDetails(ctx, projectId, location, kubernetesVmName).Execute()
 
 Get details of a specific Kubernetes VM in a location
 
@@ -184,13 +184,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.KubernetesVMApi.GetKubernetesVMDetails(context.Background(), projectId, location, kubernetesVmName).Execute()
+    resp, r, err := apiClient.KubernetesVMApi.GetLocationKubernetesVMDetails(context.Background(), projectId, location, kubernetesVmName).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `KubernetesVMApi.GetKubernetesVMDetails``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `KubernetesVMApi.GetLocationKubernetesVMDetails``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `GetKubernetesVMDetails`: VmDetailed
-    fmt.Fprintf(os.Stdout, "Response from `KubernetesVMApi.GetKubernetesVMDetails`: %v\n", resp)
+    // response from `GetLocationKubernetesVMDetails`: VmDetailed
+    fmt.Fprintf(os.Stdout, "Response from `KubernetesVMApi.GetLocationKubernetesVMDetails`: %v\n", resp)
 }
 ```
 
@@ -206,7 +206,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiGetKubernetesVMDetailsRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetLocationKubernetesVMDetailsRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes

@@ -3724,7 +3724,7 @@ paths:
       - Kubernetes Cluster
   /project/{project_id}/location/{location}/kubernetes-vm/{kubernetes_vm_name}:
     delete:
-      operationId: deleteKubernetesVMWithName
+      operationId: deleteLocationKubernetesVMWithName
       parameters:
       - description: ID of the project
         explode: false
@@ -3764,7 +3764,7 @@ paths:
       tags:
       - Kubernetes VM
     get:
-      operationId: getKubernetesVMDetails
+      operationId: getLocationKubernetesVMDetails
       parameters:
       - description: ID of the project
         explode: false

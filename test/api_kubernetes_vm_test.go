@@ -38,4 +38,50 @@ func Test_openapi_KubernetesVMApiService(t *testing.T) {
 
 	})
 
+	t.Run("Test KubernetesVMApiService DeleteLocationKubernetesVMWithName", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var projectId string
+		var location string
+		var kubernetesVmName string
+
+		httpRes, err := apiClient.KubernetesVMApi.DeleteLocationKubernetesVMWithName(context.Background(), projectId, location, kubernetesVmName).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test KubernetesVMApiService GetLocationKubernetesVMDetails", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var projectId string
+		var location string
+		var kubernetesVmName string
+
+		resp, httpRes, err := apiClient.KubernetesVMApi.GetLocationKubernetesVMDetails(context.Background(), projectId, location, kubernetesVmName).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test KubernetesVMApiService ListLocationKubernetesVMs", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var location string
+		var projectId string
+
+		resp, httpRes, err := apiClient.KubernetesVMApi.ListLocationKubernetesVMs(context.Background(), location, projectId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 }
