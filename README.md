@@ -78,7 +78,6 @@ All URIs are relative to *https://api.ubicloud.com*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*DefaultApi* | [**CreateLocationKubernetesVM**](docs/DefaultApi.md#createlocationkubernetesvm) | **Post** /project/{project_id}/location/{location}/kubernetes-vm/{kubernetes_vm_name} | Create Kubernetes VM in a specific location of a project
 *FirewallApi* | [**ActionLocationFirewallAttachSubnet**](docs/FirewallApi.md#actionlocationfirewallattachsubnet) | **Post** /project/{project_id}/location/{location}/firewall/_{firewall_id}/attach-subnet | Attach a subnet to firewall
 *FirewallApi* | [**ActionLocationFirewallDetachSubnet**](docs/FirewallApi.md#actionlocationfirewalldetachsubnet) | **Post** /project/{project_id}/location/{location}/firewall/_{firewall_id}/detach-subnet | Detach a subnet from firewall
 *FirewallApi* | [**CreateFirewall**](docs/FirewallApi.md#createfirewall) | **Post** /project/{project_id}/firewall | Create a new firewall
@@ -109,7 +108,8 @@ Class | Method | HTTP request | Description
 *KubernetesClusterApi* | [**GetKubernetesCluster**](docs/KubernetesClusterApi.md#getkubernetescluster) | **Get** /project/{project_id}/kubernetes-cluster | Return the list of kubernetes clusters in the project
 *KubernetesClusterApi* | [**GetKubernetesClusterDetails**](docs/KubernetesClusterApi.md#getkubernetesclusterdetails) | **Get** /project/{project_id}/location/{location}/kubernetes-cluster/{kubernetes_cluster_name} | Get details of a specific Kubernetes Cluster in a location
 *KubernetesClusterApi* | [**ListLocationKubernetesClusters**](docs/KubernetesClusterApi.md#listlocationkubernetesclusters) | **Get** /project/{project_id}/location/{location}/kubernetes-cluster | List kubernetes clusters in a specific location of a project
-*KubernetesVMApi* | [**DeleteKubernetesVMWithId**](docs/KubernetesVMApi.md#deletekubernetesvmwithid) | **Delete** /project/{project_id}/location/{location}/kubernetes-vm/{kubernetes_vm_name} | Delete a specific Kubernetes VM with ID
+*KubernetesVMApi* | [**CreateLocationKubernetesVM**](docs/KubernetesVMApi.md#createlocationkubernetesvm) | **Post** /project/{project_id}/location/{location}/kubernetes-vm/{kubernetes_vm_name} | Create Kubernetes VM in a specific location of a project
+*KubernetesVMApi* | [**DeleteKubernetesVMWithName**](docs/KubernetesVMApi.md#deletekubernetesvmwithname) | **Delete** /project/{project_id}/location/{location}/kubernetes-vm/{kubernetes_vm_name} | Delete a specific Kubernetes VM with name
 *KubernetesVMApi* | [**GetKubernetesVMDetails**](docs/KubernetesVMApi.md#getkubernetesvmdetails) | **Get** /project/{project_id}/location/{location}/kubernetes-vm/{kubernetes_vm_name} | Get details of a specific Kubernetes VM in a location
 *KubernetesVMApi* | [**ListLocationKubernetesVMs**](docs/KubernetesVMApi.md#listlocationkubernetesvms) | **Get** /project/{project_id}/location/{location}/kubernetes-vm | List Kubernetes VMs in a specific location of a project
 *LoadBalancerApi* | [**AttachVmLocationLoadBalancer**](docs/LoadBalancerApi.md#attachvmlocationloadbalancer) | **Post** /project/{project_id}/location/{location}/load-balancer/{load_balancer_name}/attach-vm | Attach a VM to a Load Balancer in a specific location of a project
